@@ -1,0 +1,31 @@
+[2026-05-21 14:52:01] baseline kernel run started
+[2026-05-21 14:52:01] config: noise_levels=0,0.2,0.4,0.6,0.8,1; n.rep=3; resamp=100; n.iter=500; n_cores=8; alpha=0.050
+[2026-05-21 14:52:16] loaded MNIST train set: n=60000, p=784
+[2026-05-21 14:52:16] iter 1/3 started
+[2026-05-21 15:06:48] iter 1/3 finished in 14.52839 mins; checkpoint updated
+[2026-05-21 15:06:48] iter 2/3 started
+[2026-05-21 15:21:03] iter 2/3 finished in 14.24999 mins; checkpoint updated
+[2026-05-21 15:21:03] iter 3/3 started
+[2026-05-21 15:35:17] iter 3/3 finished in 14.22754 mins; checkpoint updated
+[2026-05-21 15:35:17] all iterations finished in 43.00626 mins
+[2026-05-21 15:35:17] baseline kernel CSV outputs written
+[2026-05-21 22:23:56] baseline kernel run invoked
+[2026-05-21 22:23:56] target config: noise_levels=0,0.2,0.4,0.6,0.8,1; n.rep=10; resamp=100; n.iter=500; n_cores=8; alpha=0.050
+[2026-05-21 22:25:38] loaded MNIST train set: n=60000, p=784
+[2026-05-21 22:25:38] resuming from checkpoint: iter_completed=3; target_n.rep=10
+[2026-05-21 22:25:38] iter 4/10 started
+[2026-05-21 22:39:28] iter 4/10 finished in 13.82964 mins; checkpoint updated
+[2026-05-21 22:39:28] iter 5/10 started
+[2026-05-21 22:53:12] iter 5/10 finished in 13.74171 mins; checkpoint updated
+[2026-05-21 22:53:12] iter 6/10 started
+[2026-05-21 23:06:59] iter 6/10 finished in 13.77243 mins; checkpoint updated
+[2026-05-21 23:06:59] iter 7/10 started
+[2026-05-21 23:20:47] iter 7/10 finished in 13.80959 mins; checkpoint updated
+[2026-05-21 23:20:47] iter 8/10 started
+[2026-05-21 23:34:30] iter 8/10 finished in 13.71357 mins; checkpoint updated
+[2026-05-21 23:34:30] iter 9/10 started
+[2026-05-21 23:48:18] iter 9/10 finished in 13.80332 mins; checkpoint updated
+[2026-05-21 23:48:18] iter 10/10 started
+[2026-05-22 00:02:07] iter 10/10 finished in 13.80914 mins; checkpoint updated
+[2026-05-22 00:02:07] all requested iterations available in 1.607999 hours
+[2026-05-22 00:02:07] baseline kernel CSV outputs written
