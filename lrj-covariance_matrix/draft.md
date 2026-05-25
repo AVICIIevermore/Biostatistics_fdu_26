@@ -21,14 +21,7 @@ $$
 根据论文式 (15)，协方差矩阵的第 $(a,b)$ 个元素可以写成
 
 $$
-\widehat\sigma_{ab}
-=
-\frac{2}{\widehat\rho^2(1-\widehat\rho)^2}
-\cdot
-\frac{1}{m^2}
-\langle \widetilde K_a,\widetilde K_b\rangle_F,
-\qquad
-\widehat\rho=\frac{m}{m+n}.
+\widehat\sigma_{ab} = \frac{2}{\widehat\rho^2(1-\widehat\rho)^2} \cdot \frac{1}{m^2} \langle \widetilde K_a,\widetilde K_b\rangle_F, \qquad \widehat\rho=\frac{m}{m+n}.
 $$
 
 因此，$\widehat\Sigma$ 本质上是若干个中心化 Gram 矩阵向量化之后的 Gram 矩阵。若不同带宽下的 $\operatorname{vec}(\widetilde K_a)$ 高度相关，$\widehat\Sigma$ 就会接近奇异。这说明病态性并不只是线性代数求逆阶段的问题，也可能来自候选 kernel 网格本身的冗余。
@@ -49,11 +42,7 @@ $$
 对应的 Schur 补为
 
 $$
-r_j
-=
-\Sigma_{j,j}
--
-\Sigma_{j,S}\Sigma_{S,S}^{-1}\Sigma_{S,j}.
+r_j=\Sigma_{j,j} - \Sigma_{j,S}\Sigma_{S,S}^{-1}\Sigma_{S,j}.
 $$
 
 从 Gram 矩阵的角度看，$r_j$ 衡量的是 $\operatorname{vec}(\widetilde K_j)$ 在已经选择的中心化 Gram 矩阵张成空间之外还剩多少新的平方长度。如果 $r_j$ 很小，说明第 $j$ 个 kernel 提供的方向几乎可以由已选 kernels 线性解释，它更可能加剧 $\widehat\Sigma$ 的病态性。
@@ -136,23 +125,13 @@ $$
 3. 对所有候选 $j$ 计算第 $t$ 个 Cholesky 列：
 
 $$
-L_{j,t}
-=
-\frac{
-c_j^{(t)}
--
-\sum_{s=1}^{t-1}L_{j,s}L_{p_t,s}
-}{
-\sqrt{r_{p_t}^{(t-1)}}
-}.
+L_{j,t} = \frac{ c_j^{(t)} - \sum_{s=1}^{t-1}L_{j,s}L_{p_t,s}}{\sqrt{r_{p_t}^{(t-1)}}}.
 $$
 
 4. 更新所有候选 kernel 的对角残差：
 
 $$
-r_j^{(t)}
-=
-r_j^{(t-1)}-L_{j,t}^2.
+r_j^{(t)}=r_j^{(t-1)}-L_{j,t}^2.
 $$
 
 重复以上步骤，直到选出 $q_{\max}$ 个 kernels，或者当前最大残差低于阈值。记实际选出的 kernel 数为 $q$。
@@ -220,8 +199,7 @@ $$
 也就是说，Gaussian kernel 对应 $d(x,y)=\|x-y\|_2^2$，Laplace kernel 对应 $d(x,y)=\|x-y\|_2$。在这个 $t$ 参数化下有乘法闭包：
 
 $$
-K_{t_a}(x,y)K_{t_b}(x,y)
-=
+K_{t_a}(x,y)K_{t_b}(x,y)=
 K_{t_a+t_b}(x,y).
 $$
 
@@ -233,10 +211,8 @@ $$
 &=
 \operatorname{tr}(\widehat K_a C_m\widehat K_b C_m)\\
 &=
-\sum_{i,j=1}^m \widehat K_a(X_i,X_j)\widehat K_b(X_i,X_j)
--
-\frac{2}{m}s_a^\top s_b
-+
+\sum_{i,j=1}^m \widehat K_a(X_i,X_j)\widehat K_b(X_i,X_j)-
+\frac{2}{m}s_a^\top s_b+
 \frac{1}{m^2}S_aS_b,
 \end{aligned}
 $$
@@ -326,20 +302,16 @@ $$
 5. 对每一对 $(a,b)$，计算
 
 $$
-I_{ab}
-=
-H(t_a+t_b)
--
-\frac{2}{m}G_{ab}
-+
+I_{ab}=
+H(t_a+t_b)-
+\frac{2}{m}G_{ab}+
 \frac{1}{m^2}S_aS_b.
 $$
 
 然后令
 
 $$
-\widehat\Sigma_{ab}
-=
+\widehat\Sigma_{ab}=
 \frac{2}{\widehat\rho^2(1-\widehat\rho)^2}
 \cdot
 \frac{1}{m^2}I_{ab}.
@@ -366,12 +338,9 @@ $$
 乘法闭包加速和 lazy pivoted Cholesky 可以结合。若已经预计算了 $s_a$、$S_a$ 和所有可能的 $H(t_a+t_b)$，那么在 lazy Cholesky 中查询主元列 $p$ 时，对所有 $j=1,\ldots,R$，只需计算
 
 $$
-I_{jp}
-=
-H(t_j+t_p)
--
-\frac{2}{m}s_j^\top s_p
-+
+I_{jp}=
+H(t_j+t_p)-
+\frac{2}{m}s_j^\top s_p+
 \frac{1}{m^2}S_jS_p.
 $$
 
