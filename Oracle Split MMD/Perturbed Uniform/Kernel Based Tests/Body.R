@@ -1,3 +1,24 @@
+## __SELF_LOCATING_PREAMBLE__
+.script_dir <- tryCatch({
+  if (requireNamespace("rstudioapi", quietly = TRUE) &&
+      rstudioapi::isAvailable() &&
+      nzchar(rstudioapi::getActiveDocumentContext()$path)) {
+    dirname(rstudioapi::getActiveDocumentContext()$path)
+  } else {
+    args <- commandArgs(trailingOnly = FALSE)
+    file_arg <- sub("^--file=", "", grep("^--file=", args, value = TRUE))
+    if (length(file_arg) > 0) {
+      dirname(normalizePath(file_arg[1]))
+    } else if (!is.null(sys.frame(1)$ofile)) {
+      dirname(normalizePath(sys.frame(1)$ofile))
+    } else {
+      getwd()
+    }
+  }
+}, error = function(e) getwd())
+setwd(.script_dir)
+## __END_PREAMBLE__
+
 #------------------------------------------------------------------------------#
 #------------------------------------------------------------------------------#
 source("Functions.R")
