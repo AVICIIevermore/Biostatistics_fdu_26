@@ -1,3 +1,23 @@
 \handoff
 \__pycache__
 finalpj-1.pdf
+
+# Experiment artifacts that should not be committed
+# Raw MNIST data are downloaded/cached locally by experiment scripts.
+dechao_reproduction/**/data/*
+
+# Model weights/checkpoints and resumable R checkpoints are local artifacts.
+dechao_reproduction/**/models/*.pt
+dechao_reproduction/**/models/*.pth
+dechao_reproduction/**/Results/checkpoint.rds
+dechao_reproduction/**/checkpoint.rds
+
+# Large per-resample diagnostics are reproducible from scripts; keep summaries/plots in git.
+dechao_reproduction/**/Results/*sigma_diagnostics.csv
+dechao_reproduction/**/Results/*all_inner_iters.csv
+
+# R equivalence/debug artifacts.
+dechao_reproduction/**/equivalence_check/*.rds
+
+# Interrupted partial experiment; not a completed result.
+dechao_reproduction/faster_mnist_cnn_type1_two_nulls_gaussian_same_stats/

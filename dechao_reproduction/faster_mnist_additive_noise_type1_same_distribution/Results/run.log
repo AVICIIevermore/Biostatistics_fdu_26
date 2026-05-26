@@ -1,0 +1,48 @@
+[2026-05-25 12:38:26] type-I kernel fast run invoked
+[2026-05-25 12:38:26] target config: noise_levels=0,0.2,0.4,0.6,0.8,1; n.rep=10; resamp=100; n.iter=500; n_cores=8; alpha=0.050
+[2026-05-25 12:38:28] loaded MNIST train set: n=60000, p=784
+[2026-05-25 12:38:28] scenario set123_vs_set123 invoked
+[2026-05-25 12:38:28] scenario set123_vs_set123 iter 1/10 started
+[2026-05-25 12:46:54] scenario set123_vs_set123 iter 1/10 finished in 8.433803 mins; checkpoint updated
+[2026-05-25 12:46:54] scenario set123_vs_set123 iter 2/10 started
+[2026-05-25 12:55:18] scenario set123_vs_set123 iter 2/10 finished in 8.402908 mins; checkpoint updated
+[2026-05-25 12:55:18] scenario set123_vs_set123 iter 3/10 started
+[2026-05-25 13:03:39] scenario set123_vs_set123 iter 3/10 finished in 8.343109 mins; checkpoint updated
+[2026-05-25 13:03:39] scenario set123_vs_set123 iter 4/10 started
+[2026-05-25 13:12:00] scenario set123_vs_set123 iter 4/10 finished in 8.346436 mins; checkpoint updated
+[2026-05-25 13:12:00] scenario set123_vs_set123 iter 5/10 started
+[2026-05-25 13:20:06] scenario set123_vs_set123 iter 5/10 finished in 8.110012 mins; checkpoint updated
+[2026-05-25 13:20:06] scenario set123_vs_set123 iter 6/10 started
+[2026-05-25 13:28:24] scenario set123_vs_set123 iter 6/10 finished in 8.287754 mins; checkpoint updated
+[2026-05-25 13:28:24] scenario set123_vs_set123 iter 7/10 started
+[2026-05-25 13:36:39] scenario set123_vs_set123 iter 7/10 finished in 8.260483 mins; checkpoint updated
+[2026-05-25 13:36:39] scenario set123_vs_set123 iter 8/10 started
+[2026-05-25 13:44:57] scenario set123_vs_set123 iter 8/10 finished in 8.301002 mins; checkpoint updated
+[2026-05-25 13:44:57] scenario set123_vs_set123 iter 9/10 started
+[2026-05-25 13:53:22] scenario set123_vs_set123 iter 9/10 finished in 8.40172 mins; checkpoint updated
+[2026-05-25 13:53:22] scenario set123_vs_set123 iter 10/10 started
+[2026-05-25 14:01:35] scenario set123_vs_set123 iter 10/10 finished in 8.21687 mins; checkpoint updated
+[2026-05-25 14:01:35] scenario set123_vs_set123 CSV outputs written for n.rep=10 in 1.385095 hours
+[2026-05-25 14:01:35] scenario set128_vs_set128 invoked
+[2026-05-25 14:01:35] scenario set128_vs_set128 iter 1/10 started
+[2026-05-25 14:09:50] scenario set128_vs_set128 iter 1/10 finished in 8.249279 mins; checkpoint updated
+[2026-05-25 14:09:50] scenario set128_vs_set128 iter 2/10 started
+[2026-05-25 14:18:07] scenario set128_vs_set128 iter 2/10 finished in 8.285078 mins; checkpoint updated
+[2026-05-25 14:18:07] scenario set128_vs_set128 iter 3/10 started
+[2026-05-25 14:26:22] scenario set128_vs_set128 iter 3/10 finished in 8.257403 mins; checkpoint updated
+[2026-05-25 14:26:22] scenario set128_vs_set128 iter 4/10 started
+[2026-05-25 14:34:23] scenario set128_vs_set128 iter 4/10 finished in 8.010202 mins; checkpoint updated
+[2026-05-25 14:34:23] scenario set128_vs_set128 iter 5/10 started
+[2026-05-25 14:42:34] scenario set128_vs_set128 iter 5/10 finished in 8.188929 mins; checkpoint updated
+[2026-05-25 14:42:34] scenario set128_vs_set128 iter 6/10 started
+[2026-05-25 14:50:56] scenario set128_vs_set128 iter 6/10 finished in 8.367259 mins; checkpoint updated
+[2026-05-25 14:50:56] scenario set128_vs_set128 iter 7/10 started
+[2026-05-25 14:59:03] scenario set128_vs_set128 iter 7/10 finished in 8.108959 mins; checkpoint updated
+[2026-05-25 14:59:03] scenario set128_vs_set128 iter 8/10 started
+[2026-05-25 15:07:45] scenario set128_vs_set128 iter 8/10 finished in 8.70072 mins; checkpoint updated
+[2026-05-25 15:07:45] scenario set128_vs_set128 iter 9/10 started
+[2026-05-25 15:15:36] scenario set128_vs_set128 iter 9/10 finished in 7.860081 mins; checkpoint updated
+[2026-05-25 15:15:36] scenario set128_vs_set128 iter 10/10 started
+[2026-05-25 15:24:04] scenario set128_vs_set128 iter 10/10 finished in 8.45636 mins; checkpoint updated
+[2026-05-25 15:24:04] scenario set128_vs_set128 CSV outputs written for n.rep=10 in 1.374744 hours
+[2026-05-25 15:24:04] type-I kernel fast run finished

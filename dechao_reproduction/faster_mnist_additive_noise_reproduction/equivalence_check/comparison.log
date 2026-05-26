@@ -1,0 +1,12 @@
+Baseline equivalence check: sigma=0.400, n_rep=2, B_boot=10
+single LAP rep 1: pass=TRUE mmd=0.000e+00 cutoff=0.000e+00 reject_diff=0
+single LAP rep 2: pass=TRUE mmd=0.000e+00 cutoff=0.000e+00 reject_diff=0
+single GAUSS rep 1: pass=TRUE mmd=0.000e+00 cutoff=0.000e+00 reject_diff=0
+single GAUSS rep 2: pass=TRUE mmd=0.000e+00 cutoff=0.000e+00 reject_diff=0
+multi LAP rep 1: pass=TRUE mmd=0.000e+00 sigma=0.000e+00 cutoff=3.008e-11 reject_diff=0
+multi LAP rep 2: pass=TRUE mmd=0.000e+00 sigma=0.000e+00 cutoff=1.375e-11 reject_diff=0
+multi GEXP rep 1: pass=TRUE mmd=0.000e+00 sigma=0.000e+00 cutoff=1.563e-11 reject_diff=0
+multi GEXP rep 2: pass=TRUE mmd=0.000e+00 sigma=0.000e+00 cutoff=1.890e-11 reject_diff=0
+multi MIXED rep 1: pass=TRUE mmd=0.000e+00 sigma=0.000e+00 cutoff=7.025e-13 reject_diff=0
+multi MIXED rep 2: pass=TRUE mmd=0.000e+00 sigma=0.000e+00 cutoff=2.173e-12 reject_diff=0
+OVERALL PASS

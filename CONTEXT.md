@@ -16,4 +16,12 @@ A type-I error experiment is a null-distribution experiment where both samples a
 
 ### Experiment Directory
 
-An experiment directory is a self-contained folder under `own_reproduction/` that holds the copied code, result files, and notes for one experiment only.
+An experiment directory is a self-contained folder under a reproduction workspace, currently `dechao_reproduction/` for active CNN experiments, that holds the copied code, result files, and notes for one experiment only.
+
+### Penultimate FC-128 Embedding
+
+The penultimate FC-128 embedding is the 128-dimensional ReLU output of the CNN's `Linear(64,128)` layer before the 10-dimensional classifier logits. It should not be called the classifier output.
+
+### Layer1 GAP Embedding
+
+The layer1 GAP embedding is the 32-dimensional vector produced by applying global average pooling to the first convolutional block output after `Conv1 -> ReLU -> MaxPool`.
