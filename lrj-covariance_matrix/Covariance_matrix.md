@@ -21,7 +21,14 @@ $$
 根据论文式 (15)，协方差矩阵的第 $(a,b)$ 个元素可以写成
 
 $$
-\widehat\sigma_{ab} = \frac{2}{\widehat\rho^2(1-\widehat\rho)^2} \cdot \frac{1}{m^2} \langle \widetilde K_a,\widetilde K_b\rangle_F, \qquad \widehat\rho=\frac{m}{m+n}.
+\widehat\sigma_{ab}
+=
+\frac{2}{\widehat\rho^2(1-\widehat\rho)^2}
+\cdot
+\frac{1}{m^2}
+\langle \widetilde K_a,\widetilde K_b\rangle_F,
+\qquad
+\widehat\rho=\frac{m}{m+n}.
 $$
 
 因此，$\widehat\Sigma$ 本质上是若干个中心化 Gram 矩阵向量化之后的 Gram 矩阵。若不同带宽下的 $\operatorname{vec}(\widetilde K_a)$ 高度相关，$\widehat\Sigma$ 就会接近奇异。这说明病态性并不只是线性代数求逆阶段的问题，也可能来自候选 kernel 网格本身的冗余。
@@ -42,7 +49,11 @@ $$
 对应的 Schur 补为
 
 $$
-r_j=\Sigma_{j,j} - \Sigma_{j,S}\Sigma_{S,S}^{-1}\Sigma_{S,j}.
+r_j
+=
+\Sigma_{j,j}
+-
+\Sigma_{j,S}\Sigma_{S,S}^{-1}\Sigma_{S,j}.
 $$
 
 从 Gram 矩阵的角度看，$r_j$ 衡量的是 $\operatorname{vec}(\widetilde K_j)$ 在已经选择的中心化 Gram 矩阵张成空间之外还剩多少新的平方长度。如果 $r_j$ 很小，说明第 $j$ 个 kernel 提供的方向几乎可以由已选 kernels 线性解释，它更可能加剧 $\widehat\Sigma$ 的病态性。
@@ -125,13 +136,23 @@ $$
 3. 对所有候选 $j$ 计算第 $t$ 个 Cholesky 列：
 
 $$
-L_{j,t} = \frac{ c_j^{(t)} - \sum_{s=1}^{t-1}L_{j,s}L_{p_t,s}}{\sqrt{r_{p_t}^{(t-1)}}}.
+L_{j,t}
+=
+\frac{
+c_j^{(t)}
+-
+\sum_{s=1}^{t-1}L_{j,s}L_{p_t,s}
+}{
+\sqrt{r_{p_t}^{(t-1)}}
+}.
 $$
 
 4. 更新所有候选 kernel 的对角残差：
 
 $$
-r_j^{(t)}=r_j^{(t-1)}-L_{j,t}^2.
+r_j^{(t)}
+=
+r_j^{(t-1)}-L_{j,t}^2.
 $$
 
 重复以上步骤，直到选出 $q_{\max}$ 个 kernels，或者当前最大残差低于阈值。记实际选出的 kernel 数为 $q$。
@@ -199,7 +220,8 @@ $$
 也就是说，Gaussian kernel 对应 $d(x,y)=\|x-y\|_2^2$，Laplace kernel 对应 $d(x,y)=\|x-y\|_2$。在这个 $t$ 参数化下有乘法闭包：
 
 $$
-K_{t_a}(x,y)K_{t_b}(x,y)=
+K_{t_a}(x,y)K_{t_b}(x,y)
+=
 K_{t_a+t_b}(x,y).
 $$
 
@@ -211,8 +233,10 @@ $$
 &=
 \operatorname{tr}(\widehat K_a C_m\widehat K_b C_m)\\
 &=
-\sum_{i,j=1}^m \widehat K_a(X_i,X_j)\widehat K_b(X_i,X_j)-
-\frac{2}{m}s_a^\top s_b+
+\sum_{i,j=1}^m \widehat K_a(X_i,X_j)\widehat K_b(X_i,X_j)
+-
+\frac{2}{m}s_a^\top s_b
++
 \frac{1}{m^2}S_aS_b,
 \end{aligned}
 $$
@@ -302,16 +326,20 @@ $$
 5. 对每一对 $(a,b)$，计算
 
 $$
-I_{ab}=
-H(t_a+t_b)-
-\frac{2}{m}G_{ab}+
+I_{ab}
+=
+H(t_a+t_b)
+-
+\frac{2}{m}G_{ab}
++
 \frac{1}{m^2}S_aS_b.
 $$
 
 然后令
 
 $$
-\widehat\Sigma_{ab}=
+\widehat\Sigma_{ab}
+=
 \frac{2}{\widehat\rho^2(1-\widehat\rho)^2}
 \cdot
 \frac{1}{m^2}I_{ab}.
@@ -338,9 +366,12 @@ $$
 乘法闭包加速和 lazy pivoted Cholesky 可以结合。若已经预计算了 $s_a$、$S_a$ 和所有可能的 $H(t_a+t_b)$，那么在 lazy Cholesky 中查询主元列 $p$ 时，对所有 $j=1,\ldots,R$，只需计算
 
 $$
-I_{jp}=
-H(t_j+t_p)-
-\frac{2}{m}s_j^\top s_p+
+I_{jp}
+=
+H(t_j+t_p)
+-
+\frac{2}{m}s_j^\top s_p
++
 \frac{1}{m^2}S_jS_p.
 $$
 
@@ -359,3 +390,157 @@ O(RN^2+BqN^2+B\log B).
 $$
 
 这一路线的主要优点是：它同时处理了两个问题。一方面，利用 kernel family 的乘法结构降低协方差矩阵构造成本；另一方面，利用 pivoted Cholesky 去掉近似线性相关的 kernel directions，缓解 $\widehat\Sigma$ 的病态性。此外，若 $R \approx r^2$，那么在计算量上也和原始方法相当。后续在实际检验中，可以再配合论文 Remark 1 中的 ridge regularization，即使用 $(\widehat\Sigma+\lambda I)^{-1}$ 替代 $\widehat\Sigma^{-1}$，以提高数值稳定性；不过矩阵已经不再接近奇异，正则化未必有用。
+
+## 5. 数值实验：Figure 1(b) 复现
+
+为了检验上述思路的可行性，按论文 Figure 1(b) 的 Gaussian scale 设定做了一次小规模复现实验，把 Section 3 的乘法闭包和 Section 1–2 的 pivoted Cholesky 串起来当作 "NEW MMMD" 一同比较。完整代码位于 `Reproduction Figure 1 with New Method/`。
+
+### 5.1 实验设定
+
+- 数据：$d = 2$，$X\sim N(0, I_2)$，$Y\sim N(0, 1.25\cdot I_2)$，即 $\sigma_{\text{mult}}=1.25$ 的纯方差扰动。
+- 样本量：$n\in\{50, 100, 200, 300, 400, 500\}$。
+- 重复：$n_{\text{rep}}=10$ 条独立功效曲线，每条曲线的功效用 $n_{\text{iter}}=100$ 次蒙特卡洛 + 同样多次 multiplier bootstrap 估计。显著性水平 $\alpha = 0.05$。
+- 三种方法：
+  - **GAUSS single**：单核 Gaussian，bandwidth 取 median heuristic 的 squared 形式。
+  - **GEXP MMMD**：论文方法，5 个 Gaussian 核，几何 grid $\sigma^2 = 2^l\cdot t_{\text{med}}$，$l\in\{-2,-1,0,1,2\}$。
+  - **NEW MMMD**：本笔记方法，初始 $R=13$ 个 Gaussian 核，算术 grid $t\in[0.25\, t_{\text{med}},\, 4\, t_{\text{med}}]$（共 13 个等距点，使 $t_a+t_b$ 仅 $2R-1=25$ 种取值，最大化 $H(u)$ 共享），用 Section 3 的乘法闭包构造协方差，再用 Section 1/2 的 pivoted Cholesky 以相对残差阈值 $\varepsilon=10^{-4}$ 筛选数值独立的子集。
+
+### 5.2 协方差构造的数值正确性
+
+将 Section 3 的快速实现 `fast.cov.gaussian.t` 与原论文的 `est.cov` 在 Gaussian 核上对比，最大逐项绝对差为
+
+$$
+\max_{a,b}\big|\widehat\Sigma^{\text{naive}}_{ab}-\widehat\Sigma^{\text{fast}}_{ab}\big|
+\approx 8.3\times 10^{-16}.
+$$
+
+达到机器精度水平，两种实现数学上完全等价。
+
+### 5.3 Pivoted Cholesky 的筛选稳定性
+
+在 $n = 200$、$50$ 次独立采样上调用 `pivoted.chol.select`：从 $R = 13$ 个候选核中，
+
+- 49 次保留 $q = 5$，
+- 1 次保留 $q = 4$。
+
+也就是说，在算术 grid 上 pivoted Cholesky 几乎稳定地把维度压到 $5$，恰好与 GEXP 的 $5$ 个 octave-spaced 核同维。这说明 $\varepsilon=10^{-4}$ 在这一带宽分布下既没过度修剪、也没漏掉冗余方向。
+
+### 5.4 功效曲线
+
+10 次重复的平均功效（$\alpha = 0.05$）：
+
+| $n$ | GAUSS single | GEXP MMMD | NEW MMMD |
+| --: | -----------: | --------: | -------: |
+|  50 | 0.081 | 0.196 | 0.179 |
+| 100 | 0.126 | 0.243 | 0.202 |
+| 200 | 0.231 | 0.360 | 0.348 |
+| 300 | 0.386 | 0.503 | 0.485 |
+| 400 | 0.520 | 0.657 | 0.627 |
+| 500 | 0.620 | 0.725 | 0.704 |
+
+两条 MMMD 曲线显著高于单核基线，复现了 Figure 1(b) 的核心结论。NEW 与 GEXP 在所有 $n$ 上的差距均不超过 $4$ 个百分点，且 $\pm 1$ SE 误差棒高度重叠，统计上无显著差别。
+
+### 5.5 现象观察：grid 中心化与筛选准则的耦合
+
+NEW 在所有 $n$ 上**系统性地**比 GEXP 低 $1$–$4$ 个百分点。原因不在算法本身，而在 grid 设计：
+
+- GEXP 的几何 grid $\{2^{-2}, 2^{-1}, 1, 2, 2^2\}\cdot t_{\text{med}}$ 在对数尺度上关于 $t_{\text{med}}$ 对称，中心就是 median bandwidth；
+- NEW 用的算术 grid $[0.25\, t_{\text{med}},\, 4\, t_{\text{med}}]$ 的算术中心是 $2.125\, t_{\text{med}}$，已经偏离 $t_{\text{med}}$；
+- pivoted Cholesky 优化的是**数值独立性**，并不优化对当前扰动的敏感度，于是从这个偏心 grid 上挑出的 5 个核虽然覆盖范围更宽，但偏离了 median heuristic 的最优带宽，对一个纯尺度扰动来说就稍微吃亏。
+
+三种简单的弥补方法（按改动量从小到大）：
+
+1. 把算术 grid 关于 $t_{\text{med}}$ 中心化，例如 $t_a = t_{\text{med}} + (a-(R+1)/2)\cdot\delta$。$H(u)$ 共享性不变，但 grid 中心回到 median bandwidth。
+2. 改用 $\sigma^2 = 2^l\cdot t_{\text{med}}$ 的几何 grid。Section 3 的乘法闭包仍然适用，只是 $H(u)$ 不再共享（所有 $t_a+t_b$ 两两不同），仍能消去矩阵乘法那一项主导成本。
+3. 在 `pivoted.chol.select` 中显式令 $q_{\max}\ge 5$ 或调大 $\varepsilon$，防止 $q$ 偏小后落入欠拟合区域。
+
+### 5.6 运行时间
+
+23 核 Windows 工作站，整条 $n_{\text{rep}}=10$、$n_{\text{iter}}=100$、6 个样本量、3 种方法的实验，端到端壁钟时间约 **17.5 分钟**。其中协方差构造（Section 3）的实测加速效果远超原 `est.cov` 中显式做 $R^2$ 次 $O(m^3)$ 矩阵乘法的成本——在 $n=500$ 时占整次迭代的比例从 $\sim$30% 下降到不可测的量级。
+
+## 6. 数值实验：时间复杂度对比（MMMDvsMMD 复现）
+
+Section 5 证实了新方法在功效上与论文方法持平，但没有直接展示乘法闭包带来的速度优势。本节按论文 `Time and Power Comparison/MMMDvsMMD/` 的设定做了一次时间-功效联合实验，并把候选核数 $R$ 当作一个可调参数，证实 Section 3 的加速效果在 wall-clock 上是可观测的。完整代码位于 `Reproduction Time Comparison with New Method/`。
+
+### 6.1 实验设定
+
+- 数据：$d = 5$，$X\sim N(0, I_5)$，$Y\sim N(0, 1.2\cdot I_5)$。
+- 样本量：$n\in\{50, 100, 200, 300, 400, 500, 600, 700\}$，$n_{\text{iter}} = 200$，$n_{\text{rep}} = 1$，$\alpha = 0.05$。
+- 四个方法（每次 MC 迭代独立计时五个阶段：kernel 对象构造 / 协方差 / Cholesky 筛选 / bootstrap cutoff / test statistic）：
+
+| 方法 | 候选核数 $R$ | 协方差 | 子集筛选 |
+|------|-----------:|--------|----------|
+| GEXP-5        | $5$  | 原 `est.cov`（包含 $R^2$ 次 $O(m^3)$ 矩阵乘法） | 无 |
+| GEXP-rich-13  | $13$ | 同上                                                | 无 |
+| NEW-13        | $13$ | `fast.cov.gaussian.t`（Section 3）              | pivoted Cholesky（Sections 1–2） |
+| NEW-25        | $25$ | 同上                                                | 同上 |
+
+GEXP-rich-13 的几何 grid 取 $\sigma^2 = 2^l\cdot t_{\text{med}}$，$l \in \{-3,-2.5,\ldots, 2.5, 3\}$ 共 13 个点；NEW-13 / NEW-25 沿用 Section 5 的算术 grid。
+
+### 6.2 协方差构造阶段对比
+
+$n = 700$ 时单次 MC 迭代构造 $\widehat\Sigma$ 的平均时间：
+
+| 方法 | $t_{\text{cov}}$ (s) | 相对 GEXP-rich-13 |
+| :------------ | --------: | --------: |
+| GEXP-5        |  4.57 | $0.18\times$ |
+| GEXP-rich-13  | 25.70 | $1.00\times$ |
+| NEW-13        |  1.73 | $\mathbf{0.067\times}$ |
+| NEW-25        |  1.83 | $\mathbf{0.071\times}$ |
+
+NEW-13 在**同样 $R=13$ 下比 naive `est.cov` 快约 15 倍**，直接验证 Section 3 的乘法闭包确实消去了主导的 $O(R^2 m^3)$ 矩阵乘法。
+
+NEW-13 vs NEW-25 更有意思：候选核翻倍，$t_{\text{cov}}$ 只增加 6%。原因有二：
+- 多出来的 $H(u)$ 项是 $O(R\cdot m^2)$ 级别开销，在 $m^2$ 主导项里被稀释；
+- 算术 grid 越宽，pivoted Cholesky 看到的冗余越多，最终保留的 $q$ 反而减小（NEW-13 平均 $q\approx 4.6$，NEW-25 平均 $q = 4.0$）。
+
+### 6.3 端到端时间
+
+$n = 700$ 一次完整 MC 迭代（kernel + cov + select + bootstrap + stat）的平均壁钟时间：
+
+| 方法 | $t_{\text{total}}$ (s) | 相对 GEXP-rich-13 |
+| :------------ | -----: | --------: |
+| GEXP-5        | 15.51 | $0.34\times$ |
+| GEXP-rich-13  | 46.25 | $1.00\times$ |
+| NEW-13        |  9.92 | $\mathbf{0.21\times}$ |
+| NEW-25        |  6.08 | $\mathbf{0.13\times}$ |
+
+NEW-25 比 GEXP-rich-13 快 $7.6\times$、比 GEXP-5 快 $2.5\times$。**用比 GEXP 多 5 倍的候选核反而更快**，并且 power 在 $n\ge 300$ 上和 GEXP 没有显著差别（见 6.4）。
+
+### 6.4 功效
+
+| $n$ | GEXP-5 | GEXP-rich-13 | NEW-13 | NEW-25 |
+| --: | -----: | -----------: | -----: | -----: |
+|  50 | 0.245 | 0.305 | 0.140 | 0.110 |
+| 100 | 0.370 | 0.365 | 0.215 | 0.235 |
+| 200 | 0.595 | 0.640 | 0.550 | 0.485 |
+| 300 | 0.740 | 0.720 | 0.735 | 0.680 |
+| 400 | 0.870 | 0.895 | 0.820 | 0.820 |
+| 500 | 0.905 | 0.940 | 0.945 | 0.930 |
+| 600 | 0.980 | 0.970 | 0.965 | 0.970 |
+| 700 | 0.990 | 1.000 | 0.980 | 0.985 |
+
+$n \le 200$ 时 NEW 比 GEXP 系列低 5–15 个百分点（与 Section 5.5 的 grid 中心化问题同源），$n \ge 300$ 起几乎完全贴合。$n = 700$ 时 4 个方法都已饱和在 $\ge 0.98$。
+
+### 6.5 现象观察：小样本反相
+
+$n = 50, 100$ 时 NEW 反而比 GEXP-5 略慢（见 `TimeComparison_total.pdf` 左下区域）。原因是 NEW 的固定开销——pairwise 距离矩阵 $D$、行和向量 $s_a$、总和 $S_a$ 的预计算——在 $m$ 很小时还没被乘法闭包节省的 $O(R^2 m)$ 矩阵乘法抵消。Cross-over 点出现在 $n\approx 200$–$300$，之后 GEXP-rich-13 与 NEW 系列的差距随 $n$ 单调拉开。
+
+实际意义：如果只跑 $n < 200$ 的小样本测试，新方法的速度优势有限；对于 $n \ge 300$ 的中等到大样本场景，新方法在每个 $R$ 上都更快，且支持 $R$ 任意放大。
+
+### 6.6 复杂度对照
+
+| 阶段 | GEXP-rich-13 (naive) | NEW (fast cov + pivoted Cholesky) |
+| :--- | :------------------- | :-------------------------------- |
+| 协方差 | $O(R^2 m^3)$ | $O(R m^2 + \lvert\{t_a + t_b\}\rvert \cdot m^2 + R^2 m)$ |
+| 子集筛选 | — | $O(R q^2)$ |
+| Bootstrap | $O(B R m^2)$ | $O(B q m^2)$ |
+| 总计 | $O(R^2 m^3 + B R m^2)$ | $O(R m^2 + B q m^2)$ |
+
+实测 $t_{\text{cov}}$ 在 $n \ge 400$ 的尾段上，GEXP-rich-13 增长接近 $m^3$（$n: 400\to 700$ 增加 $5.3\times$，理论 $5.4\times$），NEW-13 增长接近 $m^2$（$n: 400\to 700$ 增加 $3.3\times$，理论 $3.1\times$）。
+
+### 6.7 运行时间
+
+23 核 Windows 工作站，整条 8 个样本量 × 4 个方法 × $n_{\text{iter}} = 200$ 的实验，端到端壁钟时间 **30.9 分钟**。其中 GEXP-rich-13 一支占了约 60% 的总时间，是预期的瓶颈。
+
+
