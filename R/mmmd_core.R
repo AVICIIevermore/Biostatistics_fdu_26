@@ -35,24 +35,56 @@ mmmd_expo_band <- function(X, Y, l0 = -3, l1 = 1) {
   (2 ^ seq.int(l0, l1)) * med
 }
 
-#' Build a list of `kernlab` kernel objects following the plan1.md `r` knob.
+#' Build a list of `kernlab` kernel objects following the paper's Mixture
+#' Alternatives convention.
 #'
-#' @param X,Y      data
-#' @param family   "GAUSS", "LAP", "GEXP", "MIXED" -- match existing project
-#' @param r        desired number of kernels (best-effort; centred on median)
+#' Per family the bandwidth grid is fixed to match the original code in
+#' `Mixture Alternatives/Code/Kernel Based Test/Functions.R`:
+#'   GAUSS / GEXP : { 2^i * med_bw : i = -2..2 }   (5 RBF kernels)
+#'   LAP          : { 2^i * med_bw : i = -2..2 }   (5 Laplace, sqrt-scaled)
+#'   MIXED        : { 2^i * med_bw : i = -1..1 } x {RBF, Laplace}   (6 kernels)
+#'
+#' The `r` argument is *ignored* here so callers cannot accidentally desync
+#' from the paper.  Use `mmmd_make_kernels_custom_r()` if you want to sweep
+#' the number-of-kernels knob (e.g. plan1.md task 3).
 mmmd_make_kernels <- function(X, Y, family = "GEXP", r = 5) {
   if (!requireNamespace("kernlab", quietly = TRUE)) stop("install.packages('kernlab')")
-  half  <- (r - 1) %/% 2
-  l0    <- -half
-  l1    <- r - 1 + l0
-  bw    <- mmmd_expo_band(X, Y, l0, l1)
-
   switch(family,
-    "GAUSS"  = lapply(bw, function(s) kernlab::rbfdot(sigma = s)),
-    "GEXP"   = lapply(bw, function(s) kernlab::rbfdot(sigma = s)),
-    "LAP"    = lapply(bw, function(s) kernlab::laplacedot(sigma = sqrt(s))),
-    "MIXED"  = c(lapply(bw, function(s) kernlab::rbfdot(sigma = s)),
-                 lapply(bw, function(s) kernlab::laplacedot(sigma = sqrt(s)))),
+    "GAUSS" = ,
+    "GEXP"  = {
+      bw <- mmmd_expo_band(X, Y, l0 = -2, l1 = 2)
+      lapply(bw, function(s) kernlab::rbfdot(sigma = s))
+    },
+    "LAP"   = {
+      bw <- mmmd_expo_band(X, Y, l0 = -2, l1 = 2)
+      lapply(bw, function(s) kernlab::laplacedot(sigma = sqrt(s)))
+    },
+    "MIXED" = {
+      bw <- mmmd_expo_band(X, Y, l0 = -1, l1 = 1)
+      c(lapply(bw, function(s) kernlab::rbfdot(sigma = s)),
+        lapply(bw, function(s) kernlab::laplacedot(sigma = sqrt(s))))
+    },
+    stop("Unknown kernel family: ", family)
+  )
+}
+
+#' Variant of `mmmd_make_kernels()` that honours the `r` knob (used by
+#' plan1.md task 3 to sweep r in {3, 5, 10}).  Builds an exponential
+#' bandwidth grid centred on the median heuristic with `r` slots; for
+#' MIXED, the resulting grid is duplicated across RBF + Laplace yielding
+#' 2*r kernels.
+mmmd_make_kernels_custom_r <- function(X, Y, family = "GEXP", r = 5) {
+  if (!requireNamespace("kernlab", quietly = TRUE)) stop("install.packages('kernlab')")
+  half <- (r - 1) %/% 2
+  l0   <- -half
+  l1   <- r - 1 + l0
+  bw   <- mmmd_expo_band(X, Y, l0, l1)
+  switch(family,
+    "GAUSS" = ,
+    "GEXP"  = lapply(bw, function(s) kernlab::rbfdot(sigma = s)),
+    "LAP"   = lapply(bw, function(s) kernlab::laplacedot(sigma = sqrt(s))),
+    "MIXED" = c(lapply(bw, function(s) kernlab::rbfdot(sigma = s)),
+                lapply(bw, function(s) kernlab::laplacedot(sigma = sqrt(s)))),
     stop("Unknown kernel family: ", family)
   )
 }
@@ -155,8 +187,12 @@ mmmd_reject_grid <- function(Tstar, Tobs, alphas) {
 #' Run a single MMMD test on the given (X, Y) and return the observed statistic
 #' plus the bootstrap null sample.  Use this when you want to combine many
 #' trials into a single ROC sweep.
-mmmd_run_test <- function(X, Y, family = "GEXP", r = 5, B = 1000) {
-  kernels <- mmmd_make_kernels(X, Y, family = family, r = r)
+#'
+#' `kernel_builder` lets task 3 swap in `mmmd_make_kernels_custom_r` for the
+#' r-sweep without disturbing the default paper-aligned config.
+mmmd_run_test <- function(X, Y, family = "GEXP", r = 5, B = 1000,
+                          kernel_builder = mmmd_make_kernels) {
+  kernels <- kernel_builder(X, Y, family = family, r = r)
   invS    <- mmmd_inv_cov(mmmd_est_cov(X, kernels))
   Tstar   <- mmmd_bootstrap(X, kernels, invS, B = B)
   mmd_vec <- nrow(X) * mmmd_mmd_vector(X, Y, kernels)
@@ -165,8 +201,10 @@ mmmd_run_test <- function(X, Y, family = "GEXP", r = 5, B = 1000) {
 }
 
 #' Reject decision at level alpha for one trial.  Convenience wrapper.
-mmmd_test <- function(X, Y, family = "GEXP", r = 5, B = 1000, alpha = 0.05) {
-  res <- mmmd_run_test(X, Y, family = family, r = r, B = B)
+mmmd_test <- function(X, Y, family = "GEXP", r = 5, B = 1000, alpha = 0.05,
+                      kernel_builder = mmmd_make_kernels) {
+  res <- mmmd_run_test(X, Y, family = family, r = r, B = B,
+                       kernel_builder = kernel_builder)
   threshold <- stats::quantile(res$Tstar, 1 - alpha)
   list(reject = res$Tobs > threshold,
        Tobs   = res$Tobs,

@@ -42,23 +42,24 @@ source(file.path(.script_dir, "..", "R", "load.R"))
 .cli <- commandArgs(trailingOnly = TRUE)
 .arg <- function(i, default) if (length(.cli) >= i) as.numeric(.cli[i]) else default
 
-D        <- .arg(1, 5)
+D        <- .arg(1, 30)
 N_TRIALS <- .arg(2, 50)
-B        <- .arg(3, 500)
+B        <- .arg(3, 200)
+RHO      <- .arg(4, 0.5)
 M <- N   <- 100
 ALPHA    <- 0.05
 T_SEQ    <- c(0.1, 0.5, 1.0, 2.0, 5.0)
 K_NN     <- 5
 
-cat(sprintf("[task4] d = %d  N_trials = %d  B = %d  m = n = %d\n",
-            D, N_TRIALS, B, M))
+cat(sprintf("[task4] d = %d  N_trials = %d  B = %d  m = n = %d  rho = %.2f\n",
+            D, N_TRIALS, B, M, RHO))
 cat("[task4] diffusion times t = ", paste(T_SEQ, collapse = ","), "\n")
 
 .t4_worker <- function(i, scenario, d, m, n, B, alpha, t_seq, k_nn,
-                       ds_args) {
+                       rho, ds_args) {
   ds <- switch(scenario,
-    "h0_normal"      = ds_identical_normal(d),
-    "var_scale"      = ds_variance_scale(d, k = ds_args$k),
+    "h0_normal"      = ds_identical_ar1(d, rho = rho),
+    "var_scale"      = ds_variance_scale_ar1(d, k = ds_args$k, rho = rho),
     "skew_normal"    = ds_skew_normal(d, alpha = ds_args$alpha),
     "mv_laplace"     = ds_mv_laplace(d),
     stop("unknown scenario: ", scenario)
@@ -73,7 +74,7 @@ cat("[task4] diffusion times t = ", paste(T_SEQ, collapse = ","), "\n")
   rejects <- mmmd_foreach(
     seq_len(N_TRIALS), .t4_worker,
     scenario = scenario, d = D, m = M, n = N, B = B, alpha = ALPHA,
-    t_seq = T_SEQ, k_nn = K_NN, ds_args = ds_args,
+    t_seq = T_SEQ, k_nn = K_NN, rho = RHO, ds_args = ds_args,
     .packages = c("Rfast"),
     .combine = c
   )
@@ -84,10 +85,14 @@ cat("[task4] diffusion times t = ", paste(T_SEQ, collapse = ","), "\n")
 
 with_parallel({
   scenarios <- list(
-    list(label = "H0: identical N(0, I)", key = "h0_normal",   args = list()),
-    list(label = "Variance-scale k=1.5",  key = "var_scale",   args = list(k = 1.5)),
-    list(label = "Skew-normal alpha=5",   key = "skew_normal", args = list(alpha = 5)),
-    list(label = "Multivariate Laplace",  key = "mv_laplace",  args = list())
+    list(label = sprintf("H0: identical AR1(rho=%.2f)", RHO),
+         key = "h0_normal",   args = list()),
+    list(label = "Variance-scale k=1.5 (AR1)",
+         key = "var_scale",   args = list(k = 1.5)),
+    list(label = "Skew-normal alpha=5",
+         key = "skew_normal", args = list(alpha = 5)),
+    list(label = "Multivariate Laplace",
+         key = "mv_laplace",  args = list())
   )
 
   results <- do.call(rbind, lapply(scenarios, function(s) {

@@ -38,9 +38,10 @@ run_one <- function(name, args = character()) {
 }
 
 ## defaults are smoke-test sized; pass real settings via per-task CLI calls
-run_one("task1_epsilon_sensitivity.R", c("2",  "20", "200"))
-run_one("task2_variance_sensitivity.R", c("10", "20", "200"))
-run_one("task3_typeI_and_roc.R",        c("10", "30", "30", "200"))
-run_one("task4_graph_demo.R",           c("5",  "20", "200"))
+run_one("task1_epsilon_sensitivity.R", c("30", "8",  "100", "0.5"))
+run_one("task2_variance_sensitivity.R", c("30", "8",  "100", "0.5"))
+run_one("task3_typeI_and_roc.R",        c("30", "12", "12",  "100", "0.5"))
+run_one("task4_graph_demo.R",           c("5",  "12", "100", "0.5"))
+run_one("fig2_mixture_alt.R",           c("30", "8",  "100", "100", "0.5"))
 
 cat("\n[run_all_tasks] DONE.  See results/ for outputs.\n")

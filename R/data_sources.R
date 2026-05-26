@@ -7,6 +7,36 @@
 ##   biological data) means writing one such factory and registering it.        #
 ## ============================================================================ #
 
+## ---- Covariance helpers ----------------------------------------------------- #
+
+#' AR(1) / Toeplitz covariance: Sigma[i,j] = rho^|i-j|.
+#'
+#' This matches the covariance structure used in the paper's Mixture
+#' Alternatives chapter (rho = 0.5 by default; Sigma1 = sigma.mult * Sigma0
+#' is then the H1 covariance).
+mmmd_ar1_cov <- function(d, rho = 0.5) {
+  idx <- matrix(seq_len(d), d, d)
+  rho ^ abs(idx - t(idx))
+}
+
+#' Sample n rows from N(mu, Sigma) using a Cholesky factor.
+.rmvn <- function(n, mu, Sigma) {
+  d <- length(mu)
+  L <- chol(Sigma)                 # upper-tri, t(L) %*% L = Sigma
+  Z <- matrix(rnorm(n * d), nrow = n, ncol = d)
+  sweep(Z %*% L, 2, mu, "+")
+}
+
+#' Sample n rows from a multivariate t with covariance Sigma and df degrees
+#' of freedom.  Uses the standard scale-mixture representation:
+#'   X = mu + Z * sqrt(df / W),   Z ~ N(0, Sigma),  W ~ chi^2_df.
+.rmvt <- function(n, mu, Sigma, df = 10) {
+  d <- length(mu)
+  Z <- .rmvn(n, rep(0, d), Sigma)
+  g <- sqrt(df / rchisq(n, df))
+  sweep(Z * g, 2, mu, "+")
+}
+
 ## ---- Vector-space generators ------------------------------------------------ #
 
 #' (1-eps) * N(0, I_d) + eps * t_10(0, I_d) mixture data source.
@@ -93,6 +123,81 @@ ds_mv_laplace <- function(d) {
   }
 }
 
+## ---- Paper-aligned generators with AR(1) covariance ------------------------- #
+
+.mix_gauss_t <- function(n, mu, Sigma, p, df) {
+  d <- length(mu)
+  if (p <= 0)  return(.rmvn(n, mu, Sigma))
+  if (p >= 1)  return(.rmvt(n, mu, Sigma, df))
+  pick <- rbinom(n, size = 1, prob = p)        # 1 = t, 0 = Gaussian
+  out  <- matrix(0, nrow = n, ncol = d)
+  n1 <- sum(pick == 1)
+  if (n1 > 0) out[pick == 1, ] <- .rmvt(n1, mu, Sigma, df)
+  if (n1 < n) out[pick == 0, ] <- .rmvn(n - n1, mu, Sigma)
+  out
+}
+
+#' Paper Fig.2 mixture alternative.
+#'
+#' For each sample, every observation is independently drawn from
+#'   (1 - p) * N(mu_g, Sigma_g) + p * t_df(mu_g, Sigma_g)
+#' (element-wise mixture).  P uses (mu0, Sigma0); Q uses (mu1, Sigma1) with
+#' Sigma1 = sigma.mult * Sigma0.  By default Sigma0 is the AR(1) Toeplitz
+#' matrix Sigma0[i,j] = rho^|i-j|.
+ds_mixture_fig2 <- function(d, p, rho = 0.5, sigma.mult = 1.25,
+                            mu0 = NULL, mu1 = NULL, df = 10) {
+  force(d); force(p); force(rho); force(sigma.mult); force(df)
+  if (is.null(mu0)) mu0 <- rep(0, d)
+  if (is.null(mu1)) mu1 <- rep(0, d)
+  Sigma0 <- mmmd_ar1_cov(d, rho)
+  Sigma1 <- sigma.mult * Sigma0
+  function(n_x, n_y) list(
+    X = .mix_gauss_t(n_x, mu0, Sigma0, p, df),
+    Y = .mix_gauss_t(n_y, mu1, Sigma1, p, df)
+  )
+}
+
+#' Variance-scale alternative with AR(1) covariance:
+#'   P = N(0, Sigma0),   Q = N(0, k * Sigma0).
+#' Use this in place of `ds_variance_scale` when the paper's covariance
+#' structure (rho = 0.5) is desired.
+ds_variance_scale_ar1 <- function(d, k, rho = 0.5) {
+  force(d); force(k); force(rho)
+  Sigma0 <- mmmd_ar1_cov(d, rho)
+  Sigma1 <- k * Sigma0
+  function(n_x, n_y) list(
+    X = .rmvn(n_x, rep(0, d), Sigma0),
+    Y = .rmvn(n_y, rep(0, d), Sigma1)
+  )
+}
+
+#' AR(1) identical generator for both samples (Type-I baseline matched to
+#' the paper's covariance).
+ds_identical_ar1 <- function(d, rho = 0.5) {
+  force(d); force(rho)
+  Sigma <- mmmd_ar1_cov(d, rho)
+  function(n_x, n_y) list(
+    X = .rmvn(n_x, rep(0, d), Sigma),
+    Y = .rmvn(n_y, rep(0, d), Sigma)
+  )
+}
+
+#' AR(1)-aware variant of `ds_normal_t_mixture` for task 1.  When rho = 0
+#' this falls back to the original identity-covariance behaviour.
+ds_normal_t_mixture_ar1 <- function(d, epsilon, rho = 0.5, df = 10,
+                                    mu_y = 0) {
+  force(d); force(epsilon); force(rho); force(df); force(mu_y)
+  Sigma <- mmmd_ar1_cov(d, rho)
+  mu_x  <- rep(0, d)
+  mu_y_vec <- rep(mu_y, d)
+  function(n_x, n_y) {
+    list(
+      X = .rmvn(n_x, mu_x, Sigma),
+      Y = .mix_gauss_t(n_y, mu_y_vec, Sigma, epsilon, df)
+    )
+  }
+}
+
 ## ---- Real-data hooks -------------------------------------------------------- #
 
 #' Build a data source from a single pre-loaded matrix by sampling without
@@ -152,3 +257,7 @@ mmmd_register_data_source("variance_scale",   ds_variance_scale)
 mmmd_register_data_source("identical_normal", ds_identical_normal)
 mmmd_register_data_source("skew_normal",      ds_skew_normal)
 mmmd_register_data_source("mv_laplace",       ds_mv_laplace)
+mmmd_register_data_source("mixture_fig2",       ds_mixture_fig2)
+mmmd_register_data_source("variance_scale_ar1", ds_variance_scale_ar1)
+mmmd_register_data_source("identical_ar1",      ds_identical_ar1)
+mmmd_register_data_source("normal_t_mixture_ar1", ds_normal_t_mixture_ar1)

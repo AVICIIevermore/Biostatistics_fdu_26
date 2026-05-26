@@ -5,7 +5,8 @@
 ##  -----------------                                                            #
 ##  Slide the contamination ratio epsilon for                                    #
 ##                                                                               #
-##      P = N(0, I_d),   Q = (1-eps) * N(0, I_d) + eps * t_10                    #
+##      P = N(0, Sigma),   Q = (1-eps) * N(0, Sigma) + eps * t_10(0, Sigma)      #
+##      Sigma[i,j] = rho^|i-j|        (AR(1) Toeplitz, rho = 0.5 by default)     #
 ##                                                                               #
 ##  Detect the smallest epsilon at which MMMD power exceeds 0.80, with auto      #
 ##  step-refinement in the steep band.                                           #
@@ -44,24 +45,25 @@ source(file.path(.script_dir, "..", "R", "load.R"))
 .cli <- commandArgs(trailingOnly = TRUE)
 .arg <- function(i, default) if (length(.cli) >= i) as.numeric(.cli[i]) else default
 
-D         <- .arg(1, 2)        # dimension (2 or 10 per plan)
-N_TRIALS  <- .arg(2, 100)      # outer reps per epsilon
-B         <- .arg(3, 1000)     # bootstrap reps
-M <- N    <- 500               # sample sizes (per plan)
+D         <- .arg(1, 30)       # dimension (paper Fig.2 uses 30 / 150)
+N_TRIALS  <- .arg(2, 20)       # outer reps per epsilon
+B         <- .arg(3, 200)      # bootstrap reps
+RHO       <- .arg(4, 0.5)      # AR(1) covariance parameter; 0 = identity
+M <- N    <- 100               # sample sizes (paper-aligned)
 ALPHA     <- 0.05
 KERNEL_FAMILY <- "GEXP"
 KERNEL_R      <- 5
 
-EPS_GRID_COARSE <- seq(0, 1, by = 0.05)
-EPS_STEP_FINE   <- 0.01
+EPS_GRID_COARSE <- seq(0, 1, by = 0.025)
+EPS_STEP_FINE   <- 0.005
 TARGET_POWER    <- 0.80
 
-cat(sprintf("[task1] d = %d  N_trials = %d  B = %d  m = n = %d\n",
-            D, N_TRIALS, B, M))
+cat(sprintf("[task1] d = %d  N_trials = %d  B = %d  m = n = %d  rho = %.2f\n",
+            D, N_TRIALS, B, M, RHO))
 
 ## ---- workhorse: power at a single epsilon ------------------------------------ #
-.eps_worker <- function(i, eps, d, m, n, B, alpha, family, r) {
-  ds <- ds_normal_t_mixture(d = d, epsilon = eps)
+.eps_worker <- function(i, eps, d, m, n, B, alpha, family, r, rho) {
+  ds <- ds_normal_t_mixture_ar1(d = d, epsilon = eps, rho = rho)
   xy <- ds(m, n)
   tr <- mmmd_test(xy$X, xy$Y, family = family, r = r,
                   B = B, alpha = alpha)
@@ -73,7 +75,7 @@ cat(sprintf("[task1] d = %d  N_trials = %d  B = %d  m = n = %d\n",
     seq_len(N_TRIALS),
     .eps_worker,
     eps = eps, d = D, m = M, n = N, B = B, alpha = ALPHA,
-    family = KERNEL_FAMILY, r = KERNEL_R,
+    family = KERNEL_FAMILY, r = KERNEL_R, rho = RHO,
     .packages = c("kernlab", "Rfast"),
     .combine = c
   )
@@ -138,8 +140,9 @@ with_parallel({
                           colour = "red") +
       ggplot2::geom_vline(xintercept = if (is.na(eps_min)) 0 else eps_min,
                           linetype = "dotted", colour = "blue") +
-      ggplot2::labs(title = sprintf("MMMD Power vs Contamination eps (d = %d)", D),
-                    subtitle = sprintf("Q = (1-eps) N(0,I) + eps t_10  -  eps_min = %s",
+      ggplot2::labs(title = sprintf("MMMD Power vs Contamination eps (d = %d, rho = %.2f)",
+                                    D, RHO),
+                    subtitle = sprintf("Q = (1-eps) N(0,Sigma) + eps t_10(0,Sigma)  -  eps_min = %s",
                                        format(eps_min, digits = 3)),
                     x = expression(epsilon), y = "Empirical Power") +
       ggplot2::theme_bw()
