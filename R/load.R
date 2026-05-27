@@ -66,13 +66,7 @@
 MMMD_ROOT <- normalizePath(file.path(.this_dir, ".."), winslash = "/")
 options(mmmd.root = MMMD_ROOT)
 
-source(file.path(.this_dir, "parallel_utils.R"))
-source(file.path(.this_dir, "data_sources.R"))
-source(file.path(.this_dir, "mmmd_core.R"))
-source(file.path(.this_dir, "roc_utils.R"))
-source(file.path(.this_dir, "graph_kernel.R"))
-source(file.path(.this_dir, "bio_loader.R"))
-
+# Define helper functions before sourcing sub-modules
 mmmd_results_dir <- function(create = TRUE) {
   d <- file.path(MMMD_ROOT, "results")
   if (create && !dir.exists(d)) dir.create(d, recursive = TRUE)
@@ -80,5 +74,12 @@ mmmd_results_dir <- function(create = TRUE) {
 }
 
 mmmd_data_dir <- function() file.path(MMMD_ROOT, "data")
+
+source(file.path(.this_dir, "parallel_utils.R"))
+source(file.path(.this_dir, "data_sources.R"))
+source(file.path(.this_dir, "mmmd_core.R"))
+source(file.path(.this_dir, "roc_utils.R"))
+source(file.path(.this_dir, "graph_kernel.R"))
+source(file.path(.this_dir, "bio_loader.R"))
 
 invisible(NULL)

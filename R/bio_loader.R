@@ -75,18 +75,18 @@ load_bio_two <- function(path_x, path_y, header = TRUE, sep = ",",
 ##
 ## (Type-I baseline: same condition resampled.)
 
-# example_path_h0 <- file.path(mmmd_data_dir(), "condition_A.csv")
-# example_path_h1 <- file.path(mmmd_data_dir(), "condition_B.csv")
-#
-# mmmd_register_data_source("bio_singlecell_typeI", function(path = example_path_h0,
-#                                                            ...) {
-#   load_bio_single(path = path, ...)
-# })
-#
-# mmmd_register_data_source("bio_singlecell_power",
-#                           function(path_x = example_path_h0,
-#                                    path_y = example_path_h1, ...) {
-#   load_bio_two(path_x = path_x, path_y = path_y, ...)
-# })
+example_path_h0 <- file.path(mmmd_data_dir(), "condition_A.csv")
+example_path_h1 <- file.path(mmmd_data_dir(), "condition_B.csv")
+
+mmmd_register_data_source("bio_singlecell_typeI", function(path = example_path_h0,
+                                                           ...) {
+  load_bio_single(path = path, ...)
+})
+
+mmmd_register_data_source("bio_singlecell_power",
+                          function(path_x = example_path_h0,
+                                   path_y = example_path_h1, ...) {
+  load_bio_two(path_x = path_x, path_y = path_y, ...)
+})
 
 invisible(NULL)

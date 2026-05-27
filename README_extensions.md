@@ -403,3 +403,88 @@ To add a new test (e.g. swap in a different bootstrap):
 1. Implement `your_test(X, Y, ...) -> list(reject, Tobs, Tstar, ...)`.
 2. Drop it into the `switch` in any driver's `.worker` function.
 3. The CSV / PNG / parallelism plumbing requires no changes.
+
+
+新增的整体架构
+原来的仓库 13 个 chapter 文件夹一行没动。新加的全部内容是一个并列在根目录上的"扩展层"，目的就是把 plan1.md 的 4 个任务做成可一键复现、可换数据集、可加新分布的工程化框架。
+
+
+R/                  ← 共享库（被所有 driver 复用）
+experiments/        ← 4 个任务的入口脚本
+data/               ← 真实数据投放点
+results/            ← 自动产出的 CSV + PNG
+run_graph_demo.R    ← 任务 4 顶层 trampoline
+run_all_tasks.R     ← 一键跑完 4 个任务（smoke 规模）
+README_extensions.md
+R/ 共享库都做了什么
+load.R — 整个项目唯一入口。带"自定位"前导：不管你 cd 到哪、怎么 source，它都能找到根目录、设好 MMMD_ROOT，再把下面所有库模块依次 source 进来。
+parallel_utils.R — 满足 plan1.md 第 4 节"强制并行化"。封装了三个东西：
+mmmd_start_cluster() 自动按 detectCores()-1 起 PSOCK/FORK 集群，并把 R/load.R 推到每个 worker（解决 Windows PSOCK worker 看不到主进程函数的问题）。
+with_parallel({...}) 自动开/关集群。
+mmmd_foreach() 是 foreach %dopar% 的薄包装，自动把闭包里引用的变量 export 到 worker，没有 backend 时回退成 lapply。
+data_sources.R — 把数据生成抽象成"工厂函数"。每个工厂返回一个 function(m, n) → list(X, Y)：
+ds_normal_t_mixture(d, epsilon) 任务 1 用
+ds_variance_scale(d, k) 任务 2 用
+ds_identical_normal(d) Type-I 用
+ds_skew_normal(d, alpha)、ds_mv_laplace(d) 任务 4 的非对称/重尾扩展
+ds_resample_from_matrix(M) / ds_resample_two_matrices(MX, MY) 接真实生物数据
+还有一个名字注册表 mmmd_register_data_source()，方便后续按字符串调用。
+mmmd_core.R — MMMD 算法本体：
+多核 MMD 向量构造（GEXP 族，r 个带宽围绕 median heuristic）
+马氏协方差 Σ̂ 估计 + ridge 正则求逆
+满足 plan1.md 第 4.2 条的向量化乘子自举：一次性生成 B × n 的高斯权重矩阵 U，矩阵乘法批量出 B 个 bootstrap 统计量；ROC 时一次自举 + quantile() 批量阈值，不重复算核矩阵。
+single_mmd_test() 用作任务 2 的单核 baseline。
+roc_utils.R — 收集 (Tobs, T*) 后做矩阵掩码扫描，输出 (alpha, fpr, tpr)。
+graph_kernel.R — 任务 4 的图扩展：
+kNN 邻接矩阵 → 非归一化拉普拉斯 → 特征分解一次，热核 K_t = U exp(-tΛ) Uᵀ 用多个扩散时间 t 批量出 r 个图核。
+把 r 个核 K_t1, …, K_tr 堆成 n × n × r 三维数组，再喂回同一套马氏协方差 + 乘子自举（这正是 plan1.md 任务 4 的核心架构主张：图核也走原引擎）。
+bio_loader.R — 真实生物数据接口：load_bio_single(path) / load_bio_two(path_x, path_y) 读 CSV/TSV 成矩阵；附带一段注释好的 mmmd_register_data_source() 模板，把数据集注册成名字后任何 driver 都能调。
+experiments/ 4 个任务做了什么
+每个 driver 都挂同一套自定位前导 + 同一套并行后端 + CLI 参数 Rscript … [d] [N_trials] [B]。
+
+task1_epsilon_sensitivity.R — 任务 1
+数据：P = N(0, I_d)，Q = (1-ε) N(0, I_d) + ε · t_10
+做法：满足 plan1.md 第 4.4 条粗细结合扫描——
+先 seq(0, 1, by = 0.05) 21 点粗扫，并行跑 N_TRIALS 次。
+找到 power 从 <0.80 跳到 ≥0.80 的"陡升带"。
+在该带内自动加密到步长 0.01 细扫。
+输出 epsilon_min：power 首次 ≥ 0.80 的最小 ε。
+task2_variance_sensitivity.R — 任务 2
+数据：P = N(0, I_d)，Q = N(0, k · I_d)
+做法：在 k ∈ [1.0, 2.0] 步长 0.05 上滑动；同一份数据在每个 k 上分别跑 MMMD（r=5 多核） 与 单核 Gaussian MMD（中位数带宽），量化多核框架对方差扰动的灵敏度增益。
+输出 k_min：MMMD 与 Single 各自首次到 power ≥ 0.80 的 k。
+task3_typeI_and_roc.R — 任务 3
+(a) Type-I 基准：P, Q 同分布 N(0, I_d)，跑 N_TRIALS_T1 次，对 r ∈ {3, 5, 10} 各算一次拒绝率。如果落到 [0.02, 0.08] 之外，控制台会打 WARNING 提示重检自举分位数实现。
+(b) 多 r 的 ROC：在固定 H1（ds_variance_scale(d, k=1.5)）下，对每个 r 用单次自举 + 阈值向量化扫描得到 (α=seq(0,1,0.01)) 网格上的 (FPR, TPR) 曲线，三条曲线同图比较。
+task4_graph_demo.R — 任务 4
+4 个场景按"同一引擎"跑：
+H0 同分布 → 检 Type-I
+方差尺度 k=1.5
+Skew-Normal α=5（非对称）
+Multivariate Laplace（重尾）
+每条都过 graph_mmmd_test()：kNN(k=5) → 5 个扩散时间 t ∈ {0.1, 0.5, 1, 2, 5} 的热核 → 三维数组喂马氏协方差 + 乘子自举。
+输出在干什么 — results/ 每个文件解释
+文件	来自	含义
+epsilon_sensitivity_d2.csv	任务 1	列 (epsilon, power, stage)。stage 区分"粗扫/细扫"，可看出自动加密发生在哪段。
+epsilon_sensitivity_curve_d2.png	任务 1	x=ε, y=power 折线；红虚线 = 0.80 目标；蓝点线 = epsilon_min。读图就能直接看到污染容忍度。
+variance_sensitivity_d5.csv	任务 2	(k, power, method)，method ∈ {MMMD, Single MMD (Gauss)}。
+variance_sensitivity_curve_d5.png	任务 2	两条 power-vs-k 曲线 + 0.80 红虚线。两条线垂直差距越大，多核聚合相对单核的尺度敏感度提升越显著。
+typeI_baseline.csv	任务 3 (a)	(r, type1)。r=3/5/10 三行，验证名义 α=0.05 下实测拒绝率是否在合理带内。
+roc_data.csv	任务 3 (b)	(alpha, fpr, tpr, r)。每个 r 对应一条曲线的全部点。
+mmmd_roc_curves_multi_r.png	任务 3 (b)	三条 ROC 曲线 + 对角线。曲线越向左上角越靠谱；用来判断"加更多核"是否真的把 TPR 推高、还是只是膨胀 FPR。
+task4_graph_summary.csv	任务 4	(scenario, power, trials, error)。4 行分别对应 H0/方差/偏态/Laplace。第一行是 Type-I，其它三行是图核 power。error 列在某场景失败（如缺 sn 包）时会写明原因。
+task4_graph_curve.png	任务 4	四个场景的拒绝率柱状图 + α=0.05 红线，一眼看出图核 MMMD 在哪些非欧场景下能区分 P/Q。
+怎么扩展到真实生物数据
+把矩阵（行=样本，列=基因/特征）放到 data/ 下，例如 data/single_pop.csv。
+编辑 R/bio_loader.R，把里面那段注释好的 mmmd_register_data_source("bio_single", function(...) ds_resample_from_matrix(M)) 模板放开，指向你的 CSV。
+在任意 driver 里把 ds_identical_normal(d) 这种调用换成 mmmd_data_source("bio_single")，就能在真实数据上跑 Type-I/Power 实验。
+全量复现命令
+smoke 规模能跑通后，按 plan1.md 的精度跑一遍真值：
+
+
+Rscript experiments/task1_epsilon_sensitivity.R 2 100 1000
+Rscript experiments/task1_epsilon_sensitivity.R 10 100 1000
+Rscript experiments/task2_variance_sensitivity.R 10 100 1000
+Rscript experiments/task3_typeI_and_roc.R 10 1000 200 500
+Rscript experiments/task4_graph_demo.R 5 50 500
+CSV/PNG 都会覆盖写到 results/。
