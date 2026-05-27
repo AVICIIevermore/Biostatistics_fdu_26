@@ -1,0 +1,5 @@
+experiment,scenario_count,axis,axis_count,sample_sizes,outer_repetitions,inner_tests_per_outer_axis,methods,B_boot,method_test_evals,notes
+faster_mnist_power,1,noise_levels,6,resamp=100 only,10,500,5,500,150000,R: n.iter is both inner MC tests and bootstrap count
+faster_mnist_type1,2,noise_levels,6,resamp=100 only,10,500,5,500,300000,Two same-distribution scenarios
+pathmnist_power_phase4,1,sample_sizes,5,"30,60,90,120,150",10,1,4,500,200,Python: B_boot only bootstrap; no inner 500 test loop
+pathmnist_type1_phase5,1,sample_sizes,2,"60,120",10,1,4,500,80,Pilot Type-I null

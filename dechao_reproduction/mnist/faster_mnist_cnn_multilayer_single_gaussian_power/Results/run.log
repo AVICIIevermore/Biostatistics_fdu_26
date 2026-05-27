@@ -1,0 +1,152 @@
+[2026-05-26 00:01:09] cnn embedding power run invoked
+[2026-05-26 00:01:09] target config: noise_levels=0,0.2,0.4,0.6,0.8,1; n.rep=10; resamp=100; n.iter=500; alpha=0.050
+[2026-05-26 00:01:16] reticulate python=/home/dechao/.conda/envs/cv-hw2/bin/python
+[2026-05-26 00:01:19] loaded MNIST train set: n=60000, p=784
+[2026-05-26 00:01:19] loaded MNIST test set: n=10000, p=784
+[2026-05-26 00:01:19] training or refreshing CNN checkpoint
+[2026-05-26 00:01:19] cnn checkpoint ready: path=/home/dechao/kernel_two-sample/dechao_reproduction/mnist/faster_mnist_cnn_shared_model/models/mnist_cnn_checkpoint.pt; best_val_acc=0.9718; device=cuda
+[2026-05-26 00:01:19] selected test pools: |X|=3177, |Y|=3141
+[2026-05-26 00:01:19] required embedding layers: layer1,layer2,final
+[2026-05-26 00:01:19] iter 1/10 started
+[2026-05-26 00:01:19] iter 1/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:01:29] iter 1/10 sigma 0.000 finished
+[2026-05-26 00:01:29] iter 1/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:01:39] iter 1/10 sigma 0.200 finished
+[2026-05-26 00:01:39] iter 1/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:01:49] iter 1/10 sigma 0.400 finished
+[2026-05-26 00:01:49] iter 1/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:01:59] iter 1/10 sigma 0.600 finished
+[2026-05-26 00:01:59] iter 1/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:02:08] iter 1/10 sigma 0.800 finished
+[2026-05-26 00:02:08] iter 1/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:02:18] iter 1/10 sigma 1.000 finished
+[2026-05-26 00:02:18] iter 1/10 finished in 58.69328 secs; checkpoint updated
+[2026-05-26 00:02:18] iter 2/10 started
+[2026-05-26 00:02:18] iter 2/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:02:28] iter 2/10 sigma 0.000 finished
+[2026-05-26 00:02:28] iter 2/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:02:38] iter 2/10 sigma 0.200 finished
+[2026-05-26 00:02:38] iter 2/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:02:48] iter 2/10 sigma 0.400 finished
+[2026-05-26 00:02:48] iter 2/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:02:59] iter 2/10 sigma 0.600 finished
+[2026-05-26 00:02:59] iter 2/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:03:10] iter 2/10 sigma 0.800 finished
+[2026-05-26 00:03:10] iter 2/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:03:20] iter 2/10 sigma 1.000 finished
+[2026-05-26 00:03:20] iter 2/10 finished in 1.038561 mins; checkpoint updated
+[2026-05-26 00:03:20] iter 3/10 started
+[2026-05-26 00:03:20] iter 3/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:03:30] iter 3/10 sigma 0.000 finished
+[2026-05-26 00:03:30] iter 3/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:03:40] iter 3/10 sigma 0.200 finished
+[2026-05-26 00:03:40] iter 3/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:03:50] iter 3/10 sigma 0.400 finished
+[2026-05-26 00:03:50] iter 3/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:04:00] iter 3/10 sigma 0.600 finished
+[2026-05-26 00:04:00] iter 3/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:04:09] iter 3/10 sigma 0.800 finished
+[2026-05-26 00:04:09] iter 3/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:04:19] iter 3/10 sigma 1.000 finished
+[2026-05-26 00:04:19] iter 3/10 finished in 58.6188 secs; checkpoint updated
+[2026-05-26 00:04:19] iter 4/10 started
+[2026-05-26 00:04:19] iter 4/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:04:28] iter 4/10 sigma 0.000 finished
+[2026-05-26 00:04:28] iter 4/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:04:38] iter 4/10 sigma 0.200 finished
+[2026-05-26 00:04:38] iter 4/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:04:48] iter 4/10 sigma 0.400 finished
+[2026-05-26 00:04:48] iter 4/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:04:58] iter 4/10 sigma 0.600 finished
+[2026-05-26 00:04:58] iter 4/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:05:08] iter 4/10 sigma 0.800 finished
+[2026-05-26 00:05:08] iter 4/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:05:18] iter 4/10 sigma 1.000 finished
+[2026-05-26 00:05:18] iter 4/10 finished in 59.17655 secs; checkpoint updated
+[2026-05-26 00:05:18] iter 5/10 started
+[2026-05-26 00:05:18] iter 5/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:05:27] iter 5/10 sigma 0.000 finished
+[2026-05-26 00:05:27] iter 5/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:05:37] iter 5/10 sigma 0.200 finished
+[2026-05-26 00:05:37] iter 5/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:05:47] iter 5/10 sigma 0.400 finished
+[2026-05-26 00:05:47] iter 5/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:05:56] iter 5/10 sigma 0.600 finished
+[2026-05-26 00:05:56] iter 5/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:06:07] iter 5/10 sigma 0.800 finished
+[2026-05-26 00:06:07] iter 5/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:06:17] iter 5/10 sigma 1.000 finished
+[2026-05-26 00:06:17] iter 5/10 finished in 59.27382 secs; checkpoint updated
+[2026-05-26 00:06:17] iter 6/10 started
+[2026-05-26 00:06:17] iter 6/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:06:27] iter 6/10 sigma 0.000 finished
+[2026-05-26 00:06:27] iter 6/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:06:36] iter 6/10 sigma 0.200 finished
+[2026-05-26 00:06:36] iter 6/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:06:46] iter 6/10 sigma 0.400 finished
+[2026-05-26 00:06:46] iter 6/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:06:56] iter 6/10 sigma 0.600 finished
+[2026-05-26 00:06:56] iter 6/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:07:05] iter 6/10 sigma 0.800 finished
+[2026-05-26 00:07:05] iter 6/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:07:15] iter 6/10 sigma 1.000 finished
+[2026-05-26 00:07:15] iter 6/10 finished in 57.58561 secs; checkpoint updated
+[2026-05-26 00:07:15] iter 7/10 started
+[2026-05-26 00:07:15] iter 7/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:07:25] iter 7/10 sigma 0.000 finished
+[2026-05-26 00:07:25] iter 7/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:07:35] iter 7/10 sigma 0.200 finished
+[2026-05-26 00:07:35] iter 7/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:07:44] iter 7/10 sigma 0.400 finished
+[2026-05-26 00:07:44] iter 7/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:07:54] iter 7/10 sigma 0.600 finished
+[2026-05-26 00:07:54] iter 7/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:08:04] iter 7/10 sigma 0.800 finished
+[2026-05-26 00:08:04] iter 7/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:08:14] iter 7/10 sigma 1.000 finished
+[2026-05-26 00:08:14] iter 7/10 finished in 58.88404 secs; checkpoint updated
+[2026-05-26 00:08:14] iter 8/10 started
+[2026-05-26 00:08:14] iter 8/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:08:24] iter 8/10 sigma 0.000 finished
+[2026-05-26 00:08:24] iter 8/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:08:33] iter 8/10 sigma 0.200 finished
+[2026-05-26 00:08:33] iter 8/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:08:43] iter 8/10 sigma 0.400 finished
+[2026-05-26 00:08:43] iter 8/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:08:53] iter 8/10 sigma 0.600 finished
+[2026-05-26 00:08:53] iter 8/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:09:03] iter 8/10 sigma 0.800 finished
+[2026-05-26 00:09:03] iter 8/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:09:14] iter 8/10 sigma 1.000 finished
+[2026-05-26 00:09:14] iter 8/10 finished in 1.000486 mins; checkpoint updated
+[2026-05-26 00:09:14] iter 9/10 started
+[2026-05-26 00:09:14] iter 9/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:09:23] iter 9/10 sigma 0.000 finished
+[2026-05-26 00:09:23] iter 9/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:09:33] iter 9/10 sigma 0.200 finished
+[2026-05-26 00:09:33] iter 9/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:09:43] iter 9/10 sigma 0.400 finished
+[2026-05-26 00:09:43] iter 9/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:09:52] iter 9/10 sigma 0.600 finished
+[2026-05-26 00:09:52] iter 9/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:10:02] iter 9/10 sigma 0.800 finished
+[2026-05-26 00:10:02] iter 9/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:10:11] iter 9/10 sigma 1.000 finished
+[2026-05-26 00:10:11] iter 9/10 finished in 57.285 secs; checkpoint updated
+[2026-05-26 00:10:11] iter 10/10 started
+[2026-05-26 00:10:11] iter 10/10 sigma 1/6 = 0.000 started
+[2026-05-26 00:10:21] iter 10/10 sigma 0.000 finished
+[2026-05-26 00:10:21] iter 10/10 sigma 2/6 = 0.200 started
+[2026-05-26 00:10:30] iter 10/10 sigma 0.200 finished
+[2026-05-26 00:10:30] iter 10/10 sigma 3/6 = 0.400 started
+[2026-05-26 00:10:40] iter 10/10 sigma 0.400 finished
+[2026-05-26 00:10:40] iter 10/10 sigma 4/6 = 0.600 started
+[2026-05-26 00:10:49] iter 10/10 sigma 0.600 finished
+[2026-05-26 00:10:49] iter 10/10 sigma 5/6 = 0.800 started
+[2026-05-26 00:11:00] iter 10/10 sigma 0.800 finished
+[2026-05-26 00:11:00] iter 10/10 sigma 6/6 = 1.000 started
+[2026-05-26 00:11:10] iter 10/10 sigma 1.000 finished
+[2026-05-26 00:11:10] iter 10/10 finished in 58.97588 secs; checkpoint updated
+[2026-05-26 00:11:10] cnn power CSV outputs written
+[2026-05-26 00:11:11] automatic plotting finished
+[2026-05-26 00:11:11] all requested iterations available in 9.861195 mins

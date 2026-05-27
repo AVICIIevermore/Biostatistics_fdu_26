@@ -1,0 +1,4 @@
+split,image_shape,label_shape,n_samples,height,width,channels,image_dtype,label_dtype,pixel_min,pixel_max
+train,89996x28x28x3,89996x1,89996,28,28,3,uint8,uint8,0,255
+val,10004x28x28x3,10004x1,10004,28,28,3,uint8,uint8,0,255
+test,7180x28x28x3,7180x1,7180,28,28,3,uint8,uint8,0,255

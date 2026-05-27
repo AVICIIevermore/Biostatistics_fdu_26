@@ -1,0 +1,8 @@
+scenario,null_or_alternative,sample_size,per_class_per_group,required_class_3,required_class_5,required_class_6,required_class_8,available_class_3,available_class_5,available_class_6,available_class_8,feasible_disjoint,limiting_margin
+mix635_vs_mix835,H1,30,10,20,20,10,10,634,592,741,1233,1,572
+mix635_vs_mix835,H1,60,20,40,40,20,20,634,592,741,1233,1,552
+mix635_vs_mix835,H1,90,30,60,60,30,30,634,592,741,1233,1,532
+mix635_vs_mix835,H1,120,40,80,80,40,40,634,592,741,1233,1,512
+mix635_vs_mix835,H1,150,50,100,100,50,50,634,592,741,1233,1,492
+mix635_vs_mix635_null,H0,60,20,40,40,40,0,634,592,741,1233,1,552
+mix635_vs_mix635_null,H0,120,40,80,80,80,0,634,592,741,1233,1,512

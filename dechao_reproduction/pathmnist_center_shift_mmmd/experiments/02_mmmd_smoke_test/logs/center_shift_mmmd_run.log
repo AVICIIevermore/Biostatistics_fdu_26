@@ -1,0 +1,43 @@
+[2026-05-27 09:41:15] center-shift MMMD config: {"B_boot": 100, "alpha": 0.05, "checkpoint_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/shared_model/models/pathmnist_cnn_checkpoint.pt", "dataset": "PathMNIST-28", "inner_repetitions": 5, "labels": [6], "methods": ["raw_pixel_gaussian5", "cnn_final_fc128_gaussian5", "cnn_multilayer_single_gaussian"], "n_grid": [20, 50], "n_tests_per_cell_actual": 5, "outer_repetitions": 1, "seed": 20260527, "settings": ["H1_source_vs_external", "H0_source", "H0_external"], "split_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/configs/center_shift_split_seed2026_holdout20.npz"}
+[2026-05-27 09:41:18] extracting frozen CNN embeddings for source_holdout_pool
+[2026-05-27 09:41:20] source_holdout embedding extraction complete in 1.94s
+[2026-05-27 09:41:20] extracting frozen CNN embeddings for external_pool
+[2026-05-27 09:41:21] external embedding extraction complete in 0.61s
+[2026-05-27 09:41:21] completed label/setting/n/outer keys at start: 0
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=20 outer_iter=1/1 inner_iter=1/5
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=20 outer_iter=1/1 inner_iter=2/5
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=20 outer_iter=1/1 inner_iter=3/5
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=20 outer_iter=1/1 inner_iter=4/5
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=20 outer_iter=1/1 inner_iter=5/5
+[2026-05-27 09:41:21] finished label=6 setting=H1_source_vs_external n=20 outer_iter=1/1 inner_repetitions=5 in 0.42s
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=50 outer_iter=1/1 inner_iter=1/5
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=50 outer_iter=1/1 inner_iter=2/5
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=50 outer_iter=1/1 inner_iter=3/5
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=50 outer_iter=1/1 inner_iter=4/5
+[2026-05-27 09:41:21] progress label=6 setting=H1_source_vs_external n=50 outer_iter=1/1 inner_iter=5/5
+[2026-05-27 09:41:22] finished label=6 setting=H1_source_vs_external n=50 outer_iter=1/1 inner_repetitions=5 in 0.43s
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=20 outer_iter=1/1 inner_iter=1/5
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=20 outer_iter=1/1 inner_iter=2/5
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=20 outer_iter=1/1 inner_iter=3/5
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=20 outer_iter=1/1 inner_iter=4/5
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=20 outer_iter=1/1 inner_iter=5/5
+[2026-05-27 09:41:22] finished label=6 setting=H0_source n=20 outer_iter=1/1 inner_repetitions=5 in 0.61s
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=50 outer_iter=1/1 inner_iter=1/5
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=50 outer_iter=1/1 inner_iter=2/5
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=50 outer_iter=1/1 inner_iter=3/5
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=50 outer_iter=1/1 inner_iter=4/5
+[2026-05-27 09:41:22] progress label=6 setting=H0_source n=50 outer_iter=1/1 inner_iter=5/5
+[2026-05-27 09:41:23] finished label=6 setting=H0_source n=50 outer_iter=1/1 inner_repetitions=5 in 0.63s
+[2026-05-27 09:41:23] progress label=6 setting=H0_external n=20 outer_iter=1/1 inner_iter=1/5
+[2026-05-27 09:41:23] progress label=6 setting=H0_external n=20 outer_iter=1/1 inner_iter=2/5
+[2026-05-27 09:41:23] progress label=6 setting=H0_external n=20 outer_iter=1/1 inner_iter=3/5
+[2026-05-27 09:41:23] progress label=6 setting=H0_external n=20 outer_iter=1/1 inner_iter=4/5
+[2026-05-27 09:41:23] progress label=6 setting=H0_external n=20 outer_iter=1/1 inner_iter=5/5
+[2026-05-27 09:41:24] finished label=6 setting=H0_external n=20 outer_iter=1/1 inner_repetitions=5 in 0.69s
+[2026-05-27 09:41:24] progress label=6 setting=H0_external n=50 outer_iter=1/1 inner_iter=1/5
+[2026-05-27 09:41:24] progress label=6 setting=H0_external n=50 outer_iter=1/1 inner_iter=2/5
+[2026-05-27 09:41:24] progress label=6 setting=H0_external n=50 outer_iter=1/1 inner_iter=3/5
+[2026-05-27 09:41:24] progress label=6 setting=H0_external n=50 outer_iter=1/1 inner_iter=4/5
+[2026-05-27 09:41:24] progress label=6 setting=H0_external n=50 outer_iter=1/1 inner_iter=5/5
+[2026-05-27 09:41:24] finished label=6 setting=H0_external n=50 outer_iter=1/1 inner_repetitions=5 in 0.64s
+[2026-05-27 09:41:25] center-shift MMMD run complete

@@ -1,0 +1,6 @@
+run_start_epoch,run_end_epoch,epochs,lr,scheduler,resume_from_latest,seed,device
+1,20,20,0.001,none,0,2026,cuda
+21,40,20,0.0005,none,1,2026,cuda
+41,60,20,0.0005,none,1,2026,cuda
+47,66,20,0.00025,none,1,2026,cuda
+67,226,160,0.0005,plateau,1,2026,cuda
