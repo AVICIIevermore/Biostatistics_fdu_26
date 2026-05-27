@@ -1,0 +1,32 @@
+{
+  "dataset": "PathMNIST-28",
+  "labels": [
+    6,
+    8
+  ],
+  "settings": [
+    "H0_source",
+    "H0_external"
+  ],
+  "n_grid": [
+    20,
+    30,
+    50,
+    80,
+    100
+  ],
+  "methods": [
+    "raw_pixel_gaussian5",
+    "cnn_final_fc128_gaussian5",
+    "cnn_multilayer_single_gaussian",
+    "cnn_multilayer_gaussian15"
+  ],
+  "outer_repetitions": 10,
+  "inner_repetitions": 500,
+  "n_tests_per_cell_actual": 5000,
+  "B_boot": 500,
+  "alpha": 0.05,
+  "seed": 20260527,
+  "checkpoint_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/shared_model/models/pathmnist_cnn_checkpoint.pt",
+  "split_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/configs/center_shift_split_seed2026_holdout20.npz"
+}

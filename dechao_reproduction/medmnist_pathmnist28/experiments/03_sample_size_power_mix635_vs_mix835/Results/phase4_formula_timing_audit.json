@@ -1,0 +1,12 @@
+{
+  "pairwise_fast_n150_sec": 0.0025160349905490875,
+  "embedding_extract_300_images_sec": 0.4438650730298832,
+  "four_methods_n150_B500_sec": 0.09147518698591739,
+  "pairwise_direct_vs_fast_max_abs_diff_small": 0.0003662109375,
+  "mmd_direct_vs_vectorized_max_abs_diff": 0.0,
+  "sigma_direct_vs_trace_max_abs_diff": 2.7755575615628914e-17,
+  "largest_n": 150,
+  "B_boot": 500,
+  "helper_stat_example": 18.110130765918004,
+  "helper_cutoff_example": 9.19863067532144
+}

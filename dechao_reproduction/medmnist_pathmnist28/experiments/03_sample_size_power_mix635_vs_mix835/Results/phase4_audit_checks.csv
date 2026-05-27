@@ -1,0 +1,15 @@
+check,passed,detail
+scenario,1,mix635_vs_mix835
+sample_sizes,1,"[30, 60, 90, 120, 150]"
+outer_repetitions,1,10
+B_boot,1,500
+alpha,1,0.05
+methods,1,"['raw_pixel_gaussian5', 'cnn_final_fc128_gaussian5', 'cnn_multilayer_single_gaussian', 'cnn_multilayer_gaussian15']"
+row_count,1,200
+all_sample_outer_method_rows_present,1,[]
+kernel_counts,1,[]
+finite_numeric_outputs,1,[]
+sampling_xy_disjoint,1,[]
+sampling_class_balanced,1,[]
+embedding_shapes,1,"{'layer1_gap': (60, 32), 'layer2_gap': (60, 64), 'final_fc128': (60, 128)}"
+computation_scale_recorded,1,"{'draws': 50, 'method_results': 200, 'max_n': 150, 'B_boot': 500, 'largest_kernel_count': 15}"

@@ -1,0 +1,3 @@
+scenario,sample_size,method,outer_repetitions,rejection_rate,mean_stat,mean_cutoff,mean_cond_sigma_reg
+mix635_vs_mix835,30,raw_pixel_gaussian5,2,0.0,5.91708814147602,12.52919652402683,45834.059228550126
+mix635_vs_mix835,30,cnn_final_fc128_gaussian5,2,0.5,21.452568158233873,11.241913674965708,46852.8335957603

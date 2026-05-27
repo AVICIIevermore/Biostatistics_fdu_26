@@ -1,0 +1,3 @@
+split,loss,accuracy,selected_by,best_epoch,seed,device
+validation,,0.883046781287485,best validation accuracy,118,2026,cuda
+test,0.8854580537854463,0.8091922005571031,reported after checkpoint selection only,118,2026,cuda

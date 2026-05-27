@@ -1,0 +1,3 @@
+split,loss,accuracy,selected_by,best_epoch,seed,device
+cnn_train_pool,0.33828396019682216,0.8800244451234757,best validation accuracy checkpoint,182,2026,cpu
+validation,0.34638149311236505,0.8784486205517793,best validation accuracy,182,2026,cpu

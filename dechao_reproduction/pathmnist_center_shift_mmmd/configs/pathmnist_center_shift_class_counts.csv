@@ -1,0 +1,37 @@
+split,label,label_name,count
+cnn_train_pool,0,adipose,7493
+cnn_train_pool,1,background,7607
+cnn_train_pool,2,debris,8288
+cnn_train_pool,3,lymphocytes,8321
+cnn_train_pool,4,mucus,6405
+cnn_train_pool,5,smooth muscle,9746
+cnn_train_pool,6,normal colon mucosa,6309
+cnn_train_pool,7,cancer-associated stroma,7521
+cnn_train_pool,8,colorectal adenocarcinoma epithelium,10308
+source_holdout_pool,0,adipose,1873
+source_holdout_pool,1,background,1902
+source_holdout_pool,2,debris,2072
+source_holdout_pool,3,lymphocytes,2080
+source_holdout_pool,4,mucus,1601
+source_holdout_pool,5,smooth muscle,2436
+source_holdout_pool,6,normal colon mucosa,1577
+source_holdout_pool,7,cancer-associated stroma,1880
+source_holdout_pool,8,colorectal adenocarcinoma epithelium,2577
+val,0,adipose,1041
+val,1,background,1057
+val,2,debris,1152
+val,3,lymphocytes,1156
+val,4,mucus,890
+val,5,smooth muscle,1354
+val,6,normal colon mucosa,877
+val,7,cancer-associated stroma,1045
+val,8,colorectal adenocarcinoma epithelium,1432
+external_pool,0,adipose,1338
+external_pool,1,background,847
+external_pool,2,debris,339
+external_pool,3,lymphocytes,634
+external_pool,4,mucus,1035
+external_pool,5,smooth muscle,592
+external_pool,6,normal colon mucosa,741
+external_pool,7,cancer-associated stroma,421
+external_pool,8,colorectal adenocarcinoma epithelium,1233
