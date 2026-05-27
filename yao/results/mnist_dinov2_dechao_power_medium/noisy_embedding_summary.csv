@@ -1,0 +1,7 @@
+"noise_sigma","method","scenario","power_mean","power_se","n_rep"
+0,"GAUSS5","power",0.995,0.005,2
+0.2,"GAUSS5","power",0.83,0,2
+0.4,"GAUSS5","power",0.225,0.045,2
+0.6,"GAUSS5","power",0.055,0.025,2
+0.8,"GAUSS5","power",0.06,0.02,2
+1,"GAUSS5","power",0.065,0.015,2

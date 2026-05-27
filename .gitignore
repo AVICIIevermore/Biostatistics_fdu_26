@@ -1,6 +1,7 @@
 \handoff
 \__pycache__
 finalpj-1.pdf
+.DS_Store
 
 # Experiment artifacts that should not be committed
 # Raw MNIST data are downloaded/cached locally by experiment scripts.
@@ -21,3 +22,9 @@ dechao_reproduction/**/equivalence_check/*.rds
 
 # Interrupted partial experiment; not a completed result.
 dechao_reproduction/faster_mnist_cnn_type1_two_nulls_gaussian_same_stats/
+
+# Local experiment data and cached embeddings should stay out of git.
+yao/data/
+
+# Temporary or partial result directories can be regenerated locally.
+yao/results/bloodmnist224_dinov2_mix013_vs_016_power_baselines/
