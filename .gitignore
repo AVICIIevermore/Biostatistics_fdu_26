@@ -40,3 +40,6 @@ dechao_reproduction/medmnist_pathmnist28/**/archive_*/
 # Interrupted partial experiment after MNIST folder consolidation.
 dechao_reproduction/mnist/faster_mnist_cnn_type1_two_nulls_gaussian_same_stats/
 dechao_reproduction/**/nohup.out
+
+# Large dataset file; download from MedMNIST official source.
+lrj-covariance_matrix/PathMNIST/pathmnist.npz
