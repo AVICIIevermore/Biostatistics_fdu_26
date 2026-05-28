@@ -603,12 +603,67 @@ PathMNIST 这个设定下，$R = 5$ vs $R = 13$ 的 naive `est.cov` 复杂度差
 ### 7.6 输出文件
 
 - [PathMNIST/mmmd_pathmnist.py](PathMNIST/mmmd_pathmnist.py)：主实现，self-contained，只用 numpy / scipy / pandas。`RIDGE_FACTOR` 和 `RIDGE_AGG` 命名常数控制 ridge 规则，便于切换。
-- [PathMNIST/mmmd_pathmnist_results.csv](PathMNIST/mmmd_pathmnist_results.csv)：上表的原始数据（8 行 = 2 scenarios × 2 n × 2 methods）。
-- [PathMNIST/mmmd_pathmnist_per_iter.csv](PathMNIST/mmmd_pathmnist_per_iter.csv)：**4000 行**逐 MC 迭代记录（`scenario`, `hypothesis`, `n`, `method`, `iter`, `rej`, `q`, `cond_raw`, `cond_reg`, `lam`），便于复查分布形状或做更精细的 size-correction 后处理。$4000 = 2$ scenarios $\times\ 2$ n $\times\ 2$ methods $\times\ 500$ iters。
+- [PathMNIST/mmmd_pathmnist_results_min1e5.csv](PathMNIST/mmmd_pathmnist_results_min1e5.csv)：默认规则 $\lambda = 10^{-5}\cdot \min$ 的主表数据。
+- [PathMNIST/mmmd_pathmnist_per_iter_min1e5.csv](PathMNIST/mmmd_pathmnist_per_iter_min1e5.csv)：默认规则下的 4000 行逐 MC 迭代记录（`scenario`, `hypothesis`, `n`, `method`, `iter`, `rej`, `q`, `cond_raw`, `cond_reg`, `lam`）。$4000 = 2$ scenarios $\times\ 2$ n $\times\ 2$ methods $\times\ 500$ iters。
+- [PathMNIST/mmmd_pathmnist_results_mean1e4.csv](PathMNIST/mmmd_pathmnist_results_mean1e4.csv)：替代规则 $\lambda = 10^{-4}\cdot \text{mean}$ 的主表数据，详见 7.8 节。
+- [PathMNIST/mmmd_pathmnist_per_iter_mean1e4.csv](PathMNIST/mmmd_pathmnist_per_iter_mean1e4.csv)：替代规则下的 4000 行逐 MC 迭代记录。
+- [PathMNIST/run_mean1e4.py](PathMNIST/run_mean1e4.py)：复现 7.8 节实验的 wrapper（只改两个常数后重跑 `run_experiment`）。
 - [PathMNIST/smoke.py](PathMNIST/smoke.py)：sanity check，验证 `fast_cov_gaussian_t` 与 `est_cov_naive` 的 Gaussian 核构造在机器精度上等价（max abs diff $\approx 9.4\times 10^{-16}$）。
 
 ### 7.7 运行时间
 
-23 核 Windows 工作站，整个主体实验（2 scenarios × 2 $n$ × 2 方法 × $n_{\text{iter}} = 500$）端到端 **约 5.5 分钟**。Python 串行实现（未用 multiprocessing），瓶颈在每次 MC 迭代里的 $m\times m$ Gram 矩阵构造和 bootstrap；由于 $m \le 120$ 矩阵很小，vectorize 后单线程就够快。
+23 核 Windows 工作站，整个主体实验（2 scenarios × 2 $n$ × 2 方法 × $n_{\text{iter}} = 500$）端到端 **约 5.5 分钟**。Python 串行实现（未用 multiprocessing），瓶颈在每次 MC 迭代里的 $m\times m$ Gram 矩阵构造和 bootstrap；由于 $m \le 120$ 矩阵很小，vectorize 后单线程就够快。7.8 节的替代规则实验额外耗时约 5 分钟。
+
+### 7.8 替代 ridge 规则：$\lambda = 10^{-4}\cdot \text{mean}(\text{diag}(\widehat\Sigma))$
+
+7.2–7.5 用的是项目 R 代码的默认规则 $\lambda = 10^{-5}\cdot \min(\text{diag})$，量级在 $10^{-7}$；本节同设定（同采样、同 $n_{\text{iter}}=500$、同 seed）只把 ridge 规则换成 $\lambda = 10^{-4}\cdot \text{mean}(\text{diag})$（量级 $10^{-5}$，约**两个数量级更大**），看看更激进的正则会怎样。
+
+| scenario | hyp. | 方法 | $n$ | power / type-I | median $q$ | median cond($\widehat\Sigma$) | median cond($\widehat\Sigma + \lambda I$) | median $\lambda$ |
+| :------- | :--: | :--- | --: | -------------: | ---------: | ----------------------------: | ----------------------------------------: | ---------------: |
+| mix635_vs_mix835      | H1 | GEXP-5   |  60 | 0.202 | 5 | $5.92\times 10^{5}$ | $4.22\times 10^{4}$ | $9.13\times 10^{-6}$ |
+| mix635_vs_mix835      | H1 | NEW-MMMD |  60 | 0.232 | **13** | $5.03\times 10^{10}$ | $1.23\times 10^{5}$ | $1.15\times 10^{-5}$ |
+| mix635_vs_mix835      | H1 | GEXP-5   | 120 | 0.320 | 5 | $2.60\times 10^{5}$ | $3.78\times 10^{4}$ | $6.04\times 10^{-6}$ |
+| mix635_vs_mix835      | H1 | NEW-MMMD | 120 | 0.360 | **13** | $3.01\times 10^{10}$ | $1.21\times 10^{5}$ | $7.22\times 10^{-6}$ |
+| mix635_vs_mix635_null | H0 | GEXP-5   |  60 | **0.060** | 5 | $1.04\times 10^{6}$ | $4.36\times 10^{4}$ | $8.99\times 10^{-6}$ |
+| mix635_vs_mix635_null | H0 | NEW-MMMD |  60 | **0.062** | **13** | $5.04\times 10^{10}$ | $1.23\times 10^{5}$ | $1.13\times 10^{-5}$ |
+| mix635_vs_mix635_null | H0 | GEXP-5   | 120 | **0.068** | 5 | $3.03\times 10^{5}$ | $3.88\times 10^{4}$ | $5.94\times 10^{-6}$ |
+| mix635_vs_mix635_null | H0 | NEW-MMMD | 120 | **0.052** | **13** | $2.76\times 10^{10}$ | $1.21\times 10^{5}$ | $7.22\times 10^{-6}$ |
+
+> **说明**：condition number 列里 `cond($\widehat\Sigma$)` 对 NEW 报的是 pivoted Cholesky 选出来的 $q\times q$ sub-matrix 的 condition number。由于本规则下 $q = 13$，所以这里其实就是原始 $13\times 13$ 矩阵的 cond——$\sim 10^{10}$ 量级，比 GEXP-5 的 5 核 cond 高 4 个数量级（因为多核之间几何冗余被算术 $t$-grid 的密集程度放大）。
+
+#### 7.8.1 两套规则的并排比较
+
+| 指标 | $\lambda = 10^{-5}\cdot \min$（7.2 主表） | $\lambda = 10^{-4}\cdot \text{mean}$（本节） |
+| :--- | :---------------------------------------- | :------------------------------------------- |
+| median $\lambda$ 量级 | $\sim 2\times 10^{-7}$ | $\sim 10^{-5}$（**$\sim 50\times$ 大**） |
+| GEXP-5 H0 Type-I | 0.10 / 0.11（严重 over-rejects） | **0.06 / 0.07**（接近名义 $\alpha$） |
+| GEXP-5 cond($\widehat\Sigma+\lambda I$) | $\sim 4\times 10^{5}$（基本没降） | $\sim 4\times 10^{4}$（降一个数量级） |
+| NEW-MMMD median $q$ | 4–5 | **13（不剪了）** |
+| NEW-MMMD H0 Type-I | 0.06 / 0.04 | 0.06 / 0.05（基本不变） |
+| H1 power（GEXP-5） | 0.27 / 0.41（含 size inflation） | 0.20 / 0.32 |
+| H1 power（NEW-MMMD） | 0.21 / 0.33 | 0.23 / 0.36 |
+| Size-corrected power（GEXP-5） | 0.17 / 0.30 | 0.14 / 0.25 |
+| Size-corrected power（NEW-MMMD） | 0.15 / 0.29 | 0.17 / 0.31 |
+
+#### 7.8.2 关键现象
+
+**(a) 更大的 $\lambda$ 修好了 GEXP-5 的 Type-I**，但代价是 raw power 也跟着下降（$0.27 \to 0.20$，$0.41 \to 0.32$）。本质上是把 $\widehat\Sigma + \lambda I$ 推向 $\lambda I$，让 Mahalanobis 距离退化成各方向等权重的欧氏范数，方差大的方向不再被自动压低——这降低了 over-rejection 风险，也降低了"按方差归一"带来的功效收益。两者抵消后 size-corrected power 从 0.17 / 0.30 略降到 0.14 / 0.25。
+
+**(b) 更大的 $\lambda$ 让 pivoted Cholesky 停止剪 kernel**。原因是 pivoted Cholesky 选 pivot 时看的是相对残差 $r_j / \widehat\Sigma_{jj}$，加上 $\lambda I$ 后 $\widehat\Sigma_{jj}$ 全部抬高 $\lambda$，把原本接近 0 的 Schur 补也抬上去，所有候选核都不再低于 $\varepsilon = 10^{-4}$ 阈值，于是 $q = R = 13$。这并不是病态性消失了——表里 cond($\widehat\Sigma$)（即原始 $13\times 13$ 矩阵）仍然是 $\sim 10^{10}$——而是 ridge 把这个病态盖在 $\lambda I$ 之下，让 cond($\widehat\Sigma + \lambda I$) 降到 $1.2\times 10^{5}$。换句话说：本节里 NEW-MMMD 的 calibration 完全靠 ridge，没靠 kernel selection。
+
+**(c) NEW-MMMD 用任何一套规则都校准良好**。这是这两个机制（构造层的 kernel selection vs 求解层的 ridge）的**互补性**：
+
+  - 小 $\lambda$ 时：pivoted Cholesky 接管，主动剪到 $q = 4$–$5$，sub-matrix cond $\sim 10^4$；
+  - 大 $\lambda$ 时：ridge 接管，pivoted Cholesky 关闭（$q = 13$），$\lambda I$ 把全 $13\times 13$ 的 cond 从 $10^{10}$ 压到 $10^5$。
+
+  两条路径都通向"$\widehat\Sigma^{-1}$ 不再放大噪声"，所以 Type-I 都在 $\sim 0.05$。Size-corrected power 也接近（0.15 / 0.29 vs 0.17 / 0.31），两条路径在功效上几乎等价。
+
+**(d) GEXP-5 只能靠 ridge**——它没有 kernel selection 机制——所以对 $\lambda$ 的选择更敏感：$\lambda$ 太小 ridge 不起作用，Type-I 通胀；$\lambda$ 太大功效下降。这是论文方法在病态场景下的**单一脆弱点**：calibration 完全外包给一个固定 ridge 常数，无法自适应。NEW-MMMD 因为多了 kernel selection 这条独立路径，对 ridge 规则的选择就**robust 很多**（两套规则下功效几乎不变）。
+
+#### 7.8.3 实践建议
+
+- 如果要和外部 PathMNIST baseline 对齐用 $\lambda = 10^{-4}\cdot \text{mean}$ 这条约定，NEW-MMMD 在这个规则下仍然 work（甚至 power 略高一点），只是 pivoted Cholesky 实际上没在干活、$q = R$。这等价于"只用 fast cov 加速 + ridge 正则化"，丢掉了 kernel selection 这一半价值。如果**目标是利用 kernel selection 的可解释性**（明确知道是哪几个带宽真正参与了检验），就应该用 $\lambda = 10^{-5}\cdot \min$ 这种"小到不干扰 selection"的 ridge 规则，把 kernel pruning 交给 pivoted Cholesky 去做。
+- 如果**目标是和论文 GEXP-5 公平对比**，应该让两个方法都用同一套 ridge 规则。在 $\lambda = 10^{-4}\cdot \text{mean}$ 规则下两个方法 H0 都校准，size-corrected power 接近 → 结论是"两个方法等价"；在 $\lambda = 10^{-5}\cdot \min$ 规则下 GEXP-5 不再校准，NEW-MMMD 校准 → 结论是"NEW-MMMD 在 R 默认 ridge 下更稳健"。两种结论都是 well-defined 的，看实验目的选择 ridge 规则即可。
+- 一个更彻底的方向：在 NEW-MMMD 里把 ridge 也变成自适应的——例如取 $\lambda$ 让 $\widehat\Sigma + \lambda I$ 的 cond 刚好降到 $10^3$ 量级（约束条件而非固定常数），同时保持 pivoted Cholesky 的 $\varepsilon$ 较小。这可以同时享受 kernel selection 和适度 ridge 的好处。本笔记暂不展开。
 
 
