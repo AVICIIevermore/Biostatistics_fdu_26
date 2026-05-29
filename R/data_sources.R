@@ -110,6 +110,43 @@ ds_skew_normal <- function(d, alpha = 5) {
   }
 }
 
+#' Independent-coordinate skew-normal sampler without external dependencies.
+#'
+#' This uses the standard stochastic representation:
+#'   Z = delta * |U| + sqrt(1 - delta^2) * V,
+#' where U,V are independent standard normal variables and
+#' delta = alpha / sqrt(1 + alpha^2).
+.rskew_normal_matrix <- function(n, d, alpha = 0) {
+  delta <- alpha / sqrt(1 + alpha ^ 2)
+  U <- matrix(rnorm(n * d), nrow = n, ncol = d)
+  V <- matrix(rnorm(n * d), nrow = n, ncol = d)
+  delta * abs(U) + sqrt(1 - delta ^ 2) * V
+}
+
+#' Marginal standardized skewness of the univariate skew-normal distribution.
+#'
+#' The standardized skewness is E[(X - mu)^3] / sd(X)^3.
+skew_normal_standard_skewness <- function(alpha) {
+  delta <- alpha / sqrt(1 + alpha ^ 2)
+  numerator <- ((4 - pi) / 2) * (delta * sqrt(2 / pi)) ^ 3
+  denominator <- (1 - 2 * delta ^ 2 / pi) ^ (3 / 2)
+  numerator / denominator
+}
+
+#' Identical skew-normal null for Type-I calibration under skewness.
+#'
+#' Both samples come from the same skew-normal distribution, so the target
+#' rejection rate remains alpha even when the null distribution is asymmetric.
+ds_identical_skew_normal <- function(d, alpha = 0) {
+  force(d); force(alpha)
+  function(n_x, n_y) {
+    list(
+      X = .rskew_normal_matrix(n_x, d, alpha = alpha),
+      Y = .rskew_normal_matrix(n_y, d, alpha = alpha)
+    )
+  }
+}
+
 #' Multivariate Laplace alternative (task 4).
 ds_mv_laplace <- function(d) {
   force(d)
@@ -256,6 +293,7 @@ mmmd_register_data_source("normal_t_mixture", ds_normal_t_mixture)
 mmmd_register_data_source("variance_scale",   ds_variance_scale)
 mmmd_register_data_source("identical_normal", ds_identical_normal)
 mmmd_register_data_source("skew_normal",      ds_skew_normal)
+mmmd_register_data_source("identical_skew_normal", ds_identical_skew_normal)
 mmmd_register_data_source("mv_laplace",       ds_mv_laplace)
 mmmd_register_data_source("mixture_fig2",       ds_mixture_fig2)
 mmmd_register_data_source("variance_scale_ar1", ds_variance_scale_ar1)

@@ -78,7 +78,7 @@ gk_mmd2_u <- function(K, m, n) {
   KXY <- K[1:m, (m + 1):(m + n), drop = FALSE]
   sx  <- (sum(KX)  - sum(diag(KX)))  / (m * (m - 1))
   sy  <- (sum(KY)  - sum(diag(KY)))  / (n * (n - 1))
-  sxy <- (sum(KXY) - sum(diag(KXY))) / (m * (n - 1))
+  sxy <- sum(KXY) / (m * n)
   sx + sy - 2 * sxy
 }
 
