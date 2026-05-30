@@ -39,6 +39,7 @@ n_cores <- if (exists("n_cores", inherits = FALSE)) max(1L, as.integer(n_cores))
 sample_replace <- if (exists("sample_replace", inherits = FALSE)) isTRUE(sample_replace) else FALSE
 n_outer <- if (exists("n_outer", inherits = FALSE)) as.integer(n_outer) else NA_integer_
 balanced_sampling <- if (exists("balanced_sampling", inherits = FALSE)) isTRUE(balanced_sampling) else FALSE
+noise_subset <- if (exists("noise_subset", inherits = FALSE)) as.numeric(noise_subset) else NULL
 
 read_npy_matrix <- function(path) {
   con <- file(path, "rb")
@@ -280,6 +281,12 @@ if (is.na(n_outer)) {
   outer_values <- seq_len(n_outer)
 }
 sigma_values <- sort(unique(dat$meta$noise_sigma))
+if (!is.null(noise_subset)) {
+  sigma_values <- sigma_values[sigma_values %in% noise_subset]
+}
+if (length(sigma_values) == 0L) {
+  stop("No noise levels left after applying noise_subset.", call. = FALSE)
+}
 rows <- list()
 
 for (outer_iter in outer_values) {

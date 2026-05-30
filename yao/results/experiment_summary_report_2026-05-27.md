@@ -255,6 +255,154 @@ Result files:
 - `yao/results/bloodmnist224_rawpixel_mix016_type1_gauss5/rawpixel_gauss5_summary.csv`
 - `yao/results/bloodmnist224_mixed_rawpixel_vs_dinov2_gauss5/bloodmnist_mixed_rawpixel_vs_dinov2_gauss5.png`
 
+### 5. CLIP versus DINOv2 versus raw pixel on the mixed-population task
+
+Comparison target:
+
+- `A = (0,1,3)`
+- `B = (0,1,6)`
+- same balanced sampling design as above
+- same test statistic `GAUSS5`
+
+CLIP power:
+
+| noise | power |
+| ---: | ---: |
+| 0.0 | 0.980 |
+| 0.2 | 0.848 |
+| 0.4 | 0.993 |
+| 0.6 | 0.937 |
+| 0.8 | 0.637 |
+| 1.0 | 0.315 |
+
+CLIP Type-I for `A vs A`:
+
+| noise | type1 |
+| ---: | ---: |
+| 0.0 | 0.046 |
+| 0.2 | 0.049 |
+| 0.4 | 0.044 |
+| 0.6 | 0.071 |
+| 0.8 | 0.069 |
+| 1.0 | 0.063 |
+
+CLIP Type-I for `B vs B`:
+
+| noise | type1 |
+| ---: | ---: |
+| 0.0 | 0.034 |
+| 0.2 | 0.039 |
+| 0.4 | 0.028 |
+| 0.6 | 0.042 |
+| 0.8 | 0.042 |
+| 1.0 | 0.063 |
+
+Interpretation:
+
+- CLIP is clearly useful on this BloodMNIST task, and it strongly outperforms raw pixels in power at low and moderate noise
+- compared with DINOv2, CLIP is broadly competitive at low-to-medium noise but falls off faster at heavy noise (`0.8` and `1.0`)
+- Type-I error remains close to nominal overall, but CLIP is a bit less stable than DINOv2 on the `A vs A` null at `sigma = 0.6, 0.8, 1.0`
+- for this task, the ranking is roughly `DINOv2 >= CLIP >> raw pixel` over most of the practically interesting noise range
+
+Result files:
+
+- `yao/results/bloodmnist224_clip_mix013_vs_016_power_sharedpool/noisy_embedding_summary.csv`
+- `yao/results/bloodmnist224_clip_mix013_type1_sharedpool/noisy_embedding_summary.csv`
+- `yao/results/bloodmnist224_clip_mix016_type1_sharedpool/noisy_embedding_summary.csv`
+- `yao/results/bloodmnist224_mixed_rawpixel_dinov2_clip_gauss5/bloodmnist_mixed_rawpixel_vs_dinov2_vs_clip_gauss5.png`
+
+### 6. Sample-size effect at fixed noise `sigma = 0.6`
+
+Goal:
+
+- compare how power changes with sample size under a fixed moderate noise level
+- keep the same mixed-population task `A = (0,1,3)` versus `B = (0,1,6)`
+- use lighter Monte Carlo settings to shorten runtime
+
+Setting:
+
+- fixed noise `sigma = 0.6`
+- sample sizes `30, 60, 90, 120, 150`
+- `n_outer = 4`, `n_inner = 20`, `B_boot = 100`
+
+Power summary:
+
+| sample size | raw pixel | DINOv2 | CLIP |
+| ---: | ---: | ---: | ---: |
+| 30 | 0.0625 | 0.5125 | 0.5000 |
+| 60 | 0.4125 | 0.8875 | 0.7750 |
+| 90 | 0.7125 | 0.9625 | 0.8875 |
+| 120 | 0.8875 | 1.0000 | 0.9625 |
+| 150 | 0.9875 | 1.0000 | 1.0000 |
+
+Interpretation:
+
+- all three methods improve with sample size, which is exactly the pattern we would hope to see
+- DINOv2 has the best small-sample efficiency in this experiment
+- CLIP is very close to DINOv2 and is much stronger than raw pixels at `n = 30, 60, 90`
+- raw pixels eventually catch up as sample size grows, but need substantially more observations to reach the same power
+- this is good evidence that learned embeddings improve statistical efficiency for MMMD testing on this biological image task
+
+Type-I summary:
+
+- DINOv2 stays near nominal across the sweep
+- raw pixels remain slightly conservative
+- CLIP is acceptable overall but somewhat noisier in the smallest-sample regime, especially for `A vs A`
+
+Result files:
+
+- `yao/results/bloodmnist224_sample_size_sigma06/sample_size_summary.csv`
+- `yao/results/bloodmnist224_sample_size_sigma06/bloodmnist_mixed_sample_size_comparison.png`
+
+### 7. PathMNIST-28 sample-size alignment against dechao's CNN baselines
+
+Task:
+
+- use the same PathMNIST-28 overlapping-mixture setting as dechao
+- power alternative: `mix635_vs_mix835`
+- matched null: `mix635_vs_mix635_null`
+- compare frozen `DINOv2` and `CLIP` embeddings with dechao's raw-pixel and CNN baselines
+
+Setting:
+
+- dataset: official PathMNIST-28 `test` split only for testing
+- sample sizes for power: `30, 60, 90, 120, 150`
+- sample sizes for Type-I: `60, 120`
+- `n_outer = 10`, `n_inner = 500`, `B_boot = 500`, `alpha = 0.05`
+- no additive image noise in this PathMNIST line; the comparison is purely about sample-size power
+
+Frozen-embedding power results:
+
+| sample size | DINOv2 | CLIP |
+| ---: | ---: | ---: |
+| 30 | 0.0534 | 0.1166 |
+| 60 | 0.2506 | 0.1760 |
+| 90 | 0.5926 | 0.3232 |
+| 120 | 0.8900 | 0.5152 |
+| 150 | 0.9904 | 0.7172 |
+
+Frozen-embedding Type-I results:
+
+| sample size | DINOv2 | CLIP |
+| ---: | ---: | ---: |
+| 60 | 0.0038 | 0.0542 |
+| 120 | 0.0034 | 0.0288 |
+
+Interpretation:
+
+- on PathMNIST-28, both frozen foundation-model embeddings are weaker than dechao's best task-trained CNN baselines in power
+- `DINOv2` is consistently stronger than `CLIP` on this task, especially at medium and large sample sizes
+- `CLIP` is only modestly useful here and tracks closer to raw-pixel MMMD than to the stronger CNN baselines
+- `DINOv2` eventually becomes very strong by `n = 150`, but still trails the best CNN methods at smaller sample sizes
+- Type-I error is controlled for both methods; `DINOv2` is extremely conservative, while `CLIP` is closer to the nominal 0.05 level
+- this suggests that for very small biomedical images (`28 x 28`), a task-trained small CNN remains better matched to the data than large frozen natural-image encoders
+
+Result files:
+
+- `yao/results/pathmnist28_dinov2_alignment/pathmnist_embedding_summary.csv`
+- `yao/results/pathmnist28_clip_alignment/pathmnist_embedding_summary.csv`
+- `yao/results/pathmnist28_vs_cnn_comparison/pathmnist_sample_size_vs_cnn.png`
+
 ## Main Lessons
 
 1. DINOv2 is not uniformly strong across datasets.
@@ -272,12 +420,22 @@ Result files:
 5. On the mixed BloodMNIST task, learned representation beats raw pixels.
    DINOv2 + GAUSS5 has substantially higher power than raw pixel + GAUSS5 over most noise levels while still keeping Type-I error under control.
 
+6. CLIP is a strong second foundation-model baseline.
+   It confirms that the advantage is not unique to one encoder family, though DINOv2 appears a bit more noise-robust on this task.
+
+7. Learned embeddings help most in the smaller-sample regime.
+   The sample-size sweep suggests that raw pixels can eventually recover with enough data, but DINOv2 and CLIP reach high power with fewer samples.
+
+8. Frozen foundation-model embeddings are not guaranteed to beat trained CNNs on tiny biomedical images.
+   On PathMNIST-28, the task-trained CNN baselines remain stronger than both DINOv2 and CLIP, especially at small and medium sample sizes.
+
 ## Recommended Next Steps
 
-1. Plot the three mixed-population curves together:
-   power, `A vs A` Type-I, `B vs B` Type-I.
+1. Repeat the sample-size sweep at one heavier noise level such as `sigma = 0.8`.
 
-2. Compare DINOv2 with CLIP on the same shared BloodMNIST pools.
+2. Try a harder BloodMNIST pair or mixture to see whether DINOv2's advantage over CLIP widens.
+
+3. If runtime permits, compare `GAUSS5` with one or two additional paper baselines under the same sample-size setup.
 
 3. Try a harder BloodMNIST pair or mixture, especially classes involving `immature granulocyte (3)` and `neutrophil (6)`.
 

@@ -98,6 +98,8 @@ class FrozenEncoder:
 
         if self.encoder == "clip":
             feats = self.model.get_image_features(**inputs)
+            if not isinstance(feats, torch.Tensor):
+                feats = feats.pooler_output if getattr(feats, "pooler_output", None) is not None else feats.last_hidden_state[:, 0]
         else:
             out = self.model(**inputs)
             feats = out.pooler_output if getattr(out, "pooler_output", None) is not None else out.last_hidden_state[:, 0]
