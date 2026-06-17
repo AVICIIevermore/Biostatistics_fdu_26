@@ -1,0 +1,13 @@
+"noise_sigma","method","reject_rate"
+0,"raw_pixel_gauss_mmmd_baseline",0.8872
+0.2,"raw_pixel_gauss_mmmd_baseline",0.8864
+0.4,"raw_pixel_gauss_mmmd_baseline",0.8208
+0.6,"raw_pixel_gauss_mmmd_baseline",0.6262
+0.8,"raw_pixel_gauss_mmmd_baseline",0.3396
+1,"raw_pixel_gauss_mmmd_baseline",0.1652
+0,"final_embedding_gaussian5",1
+0.2,"final_embedding_gaussian5",0.9994
+0.4,"final_embedding_gaussian5",0.7634
+0.6,"final_embedding_gaussian5",0.1956
+0.8,"final_embedding_gaussian5",0.1028
+1,"final_embedding_gaussian5",0.0752

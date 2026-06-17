@@ -1,0 +1,5 @@
+split,image_shape,label_shape,n_samples,height,width,channels,image_dtype,pixel_min,pixel_max
+cnn_train_pool,71998x28x28x3,71998,71998,28,28,3,uint8,0,255
+source_holdout_pool,17998x28x28x3,17998,17998,28,28,3,uint8,0,255
+val,10004x28x28x3,10004,10004,28,28,3,uint8,0,255
+external_pool,7180x28x28x3,7180,7180,28,28,3,uint8,0,255

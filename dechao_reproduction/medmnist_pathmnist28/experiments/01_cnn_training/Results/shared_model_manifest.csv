@@ -1,0 +1,9 @@
+artifact,role,path
+checkpoint,best validation checkpoint,../../shared_model/models/pathmnist_cnn_checkpoint.pt
+train_config,training configuration,../../shared_model/models/train_config.json
+train_history,epoch metrics,../../shared_model/models/train_history.csv
+training_curves,loss and accuracy plot,../../shared_model/models/training_curves.png
+classification_metrics,validation/test sanity metrics,../../shared_model/models/classification_metrics.csv
+test_confusion_matrix_csv,test confusion matrix table,../../shared_model/models/test_confusion_matrix.csv
+test_confusion_matrix_png,test confusion matrix plot,../../shared_model/models/test_confusion_matrix.png
+train_log,training log,../../shared_model/logs/train.log

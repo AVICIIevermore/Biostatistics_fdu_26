@@ -1,0 +1,299 @@
+Sanity check: max|est.cov - fast.cov.gaussian.t| = 8.327e-16
+Loading required package: iterators
+Loading required package: parallel
+Using 23 cores.
+
+=========  repetition 1 / 10  =========
+Loading required package: Rcpp
+Loading required package: zigg
+Loading required package: RcppParallel
+
+Attaching package: 'RcppParallel'
+
+The following object is masked from 'package:Rcpp':
+
+    LdFlags
+
+
+Rfast: 2.1.5.2
+ ___ __ __ __ __    __ __ __ __ __ _             _               __ __ __ __ __     __ __ __ __ __ __   
+|  __ __ __ __  |  |  __ __ __ __ _/            / \             |  __ __ __ __ /   /__ __ _   _ __ __\  
+| |           | |  | |                         / _ \            | |                        / /          
+| |           | |  | |                        / / \ \           | |                       / /          
+| |           | |  | |                       / /   \ \          | |                      / /          
+| |__ __ __ __| |  | |__ __ __ __           / /     \ \         | |__ __ __ __ _        / /__/\          
+|    __ __ __ __|  |  __ __ __ __|         / /__ _ __\ \        |_ __ __ __ _   |      / ___  /           
+|   \              | |                    / _ _ _ _ _ _ \                     | |      \/  / /       
+| |\ \             | |                   / /           \ \                    | |         / /          
+| | \ \            | |                  / /             \ \                   | |        / /          
+| |  \ \           | |                 / /               \ \                  | |       / /          
+| |   \ \__ __ _   | |                / /                 \ \     _ __ __ __ _| |      / /          
+|_|    \__ __ __\  |_|               /_/                   \_\   /_ __ __ __ ___|      \/             team
+
+Attaching package: 'Rfast'
+
+The following objects are masked from 'package:LaplacesDemon':
+
+    dmvt, rmvt
+
+[11:43:18] n = 50 ...
+    GAUSS single  = 0.040
+    GEXP   MMMD   = 0.170
+    NEW    MMMD   = 0.130
+[11:43:24] n = 100 ...
+    GAUSS single  = 0.150
+    GEXP   MMMD   = 0.270
+    NEW    MMMD   = 0.150
+[11:43:30] n = 200 ...
+    GAUSS single  = 0.290
+    GEXP   MMMD   = 0.390
+    NEW    MMMD   = 0.420
+[11:43:46] n = 300 ...
+    GAUSS single  = 0.430
+    GEXP   MMMD   = 0.440
+    NEW    MMMD   = 0.530
+[11:44:15] n = 400 ...
+    GAUSS single  = 0.500
+    GEXP   MMMD   = 0.630
+    NEW    MMMD   = 0.620
+[11:44:33] n = 500 ...
+    GAUSS single  = 0.620
+    GEXP   MMMD   = 0.730
+    NEW    MMMD   = 0.730
+
+=========  repetition 2 / 10  =========
+[11:44:53] n = 50 ...
+    GAUSS single  = 0.060
+    GEXP   MMMD   = 0.250
+    NEW    MMMD   = 0.180
+[11:44:54] n = 100 ...
+    GAUSS single  = 0.170
+    GEXP   MMMD   = 0.260
+    NEW    MMMD   = 0.200
+[11:44:56] n = 200 ...
+    GAUSS single  = 0.200
+    GEXP   MMMD   = 0.260
+    NEW    MMMD   = 0.300
+[11:45:01] n = 300 ...
+    GAUSS single  = 0.300
+    GEXP   MMMD   = 0.490
+    NEW    MMMD   = 0.460
+[11:45:09] n = 400 ...
+    GAUSS single  = 0.570
+    GEXP   MMMD   = 0.680
+    NEW    MMMD   = 0.640
+[11:45:33] n = 500 ...
+    GAUSS single  = 0.660
+    GEXP   MMMD   = 0.740
+    NEW    MMMD   = 0.740
+
+=========  repetition 3 / 10  =========
+[11:46:28] n = 50 ...
+    GAUSS single  = 0.050
+    GEXP   MMMD   = 0.180
+    NEW    MMMD   = 0.200
+[11:46:29] n = 100 ...
+    GAUSS single  = 0.120
+    GEXP   MMMD   = 0.200
+    NEW    MMMD   = 0.260
+[11:46:30] n = 200 ...
+    GAUSS single  = 0.230
+    GEXP   MMMD   = 0.370
+    NEW    MMMD   = 0.340
+[11:46:40] n = 300 ...
+    GAUSS single  = 0.330
+    GEXP   MMMD   = 0.510
+    NEW    MMMD   = 0.530
+[11:46:52] n = 400 ...
+    GAUSS single  = 0.530
+    GEXP   MMMD   = 0.590
+    NEW    MMMD   = 0.580
+[11:47:05] n = 500 ...
+    GAUSS single  = 0.630
+    GEXP   MMMD   = 0.720
+    NEW    MMMD   = 0.680
+
+=========  repetition 4 / 10  =========
+[11:47:32] n = 50 ...
+    GAUSS single  = 0.060
+    GEXP   MMMD   = 0.140
+    NEW    MMMD   = 0.220
+[11:47:32] n = 100 ...
+    GAUSS single  = 0.110
+    GEXP   MMMD   = 0.270
+    NEW    MMMD   = 0.100
+[11:47:34] n = 200 ...
+    GAUSS single  = 0.210
+    GEXP   MMMD   = 0.390
+    NEW    MMMD   = 0.350
+[11:47:39] n = 300 ...
+    GAUSS single  = 0.380
+    GEXP   MMMD   = 0.470
+    NEW    MMMD   = 0.520
+[11:47:48] n = 400 ...
+    GAUSS single  = 0.420
+    GEXP   MMMD   = 0.610
+    NEW    MMMD   = 0.670
+[11:48:01] n = 500 ...
+    GAUSS single  = 0.660
+    GEXP   MMMD   = 0.810
+    NEW    MMMD   = 0.720
+
+=========  repetition 5 / 10  =========
+[11:48:20] n = 50 ...
+    GAUSS single  = 0.170
+    GEXP   MMMD   = 0.300
+    NEW    MMMD   = 0.190
+[11:48:21] n = 100 ...
+    GAUSS single  = 0.110
+    GEXP   MMMD   = 0.280
+    NEW    MMMD   = 0.220
+[11:48:23] n = 200 ...
+    GAUSS single  = 0.150
+    GEXP   MMMD   = 0.400
+    NEW    MMMD   = 0.440
+[11:48:28] n = 300 ...
+    GAUSS single  = 0.460
+    GEXP   MMMD   = 0.510
+    NEW    MMMD   = 0.430
+[11:48:41] n = 400 ...
+    GAUSS single  = 0.570
+    GEXP   MMMD   = 0.670
+    NEW    MMMD   = 0.610
+[11:49:26] n = 500 ...
+    GAUSS single  = 0.600
+    GEXP   MMMD   = 0.690
+    NEW    MMMD   = 0.740
+
+=========  repetition 6 / 10  =========
+[11:50:24] n = 50 ...
+    GAUSS single  = 0.120
+    GEXP   MMMD   = 0.150
+    NEW    MMMD   = 0.220
+[11:50:25] n = 100 ...
+    GAUSS single  = 0.110
+    GEXP   MMMD   = 0.200
+    NEW    MMMD   = 0.210
+[11:50:27] n = 200 ...
+    GAUSS single  = 0.170
+    GEXP   MMMD   = 0.400
+    NEW    MMMD   = 0.350
+[11:50:33] n = 300 ...
+    GAUSS single  = 0.400
+    GEXP   MMMD   = 0.590
+    NEW    MMMD   = 0.540
+[11:50:41] n = 400 ...
+    GAUSS single  = 0.560
+    GEXP   MMMD   = 0.760
+    NEW    MMMD   = 0.670
+[11:51:05] n = 500 ...
+    GAUSS single  = 0.550
+    GEXP   MMMD   = 0.720
+    NEW    MMMD   = 0.690
+
+=========  repetition 7 / 10  =========
+[11:51:26] n = 50 ...
+    GAUSS single  = 0.070
+    GEXP   MMMD   = 0.210
+    NEW    MMMD   = 0.140
+[11:51:27] n = 100 ...
+    GAUSS single  = 0.100
+    GEXP   MMMD   = 0.200
+    NEW    MMMD   = 0.280
+[11:51:29] n = 200 ...
+    GAUSS single  = 0.290
+    GEXP   MMMD   = 0.370
+    NEW    MMMD   = 0.250
+[11:51:34] n = 300 ...
+    GAUSS single  = 0.430
+    GEXP   MMMD   = 0.500
+    NEW    MMMD   = 0.520
+[11:51:43] n = 400 ...
+    GAUSS single  = 0.500
+    GEXP   MMMD   = 0.650
+    NEW    MMMD   = 0.530
+[11:52:22] n = 500 ...
+    GAUSS single  = 0.590
+    GEXP   MMMD   = 0.700
+    NEW    MMMD   = 0.650
+
+=========  repetition 8 / 10  =========
+[11:52:59] n = 50 ...
+    GAUSS single  = 0.100
+    GEXP   MMMD   = 0.170
+    NEW    MMMD   = 0.240
+[11:53:03] n = 100 ...
+    GAUSS single  = 0.090
+    GEXP   MMMD   = 0.230
+    NEW    MMMD   = 0.220
+[11:53:09] n = 200 ...
+    GAUSS single  = 0.220
+    GEXP   MMMD   = 0.360
+    NEW    MMMD   = 0.320
+[11:53:25] n = 300 ...
+    GAUSS single  = 0.340
+    GEXP   MMMD   = 0.510
+    NEW    MMMD   = 0.440
+[11:53:55] n = 400 ...
+    GAUSS single  = 0.510
+    GEXP   MMMD   = 0.640
+    NEW    MMMD   = 0.650
+[11:54:40] n = 500 ...
+    GAUSS single  = 0.650
+    GEXP   MMMD   = 0.710
+    NEW    MMMD   = 0.660
+
+=========  repetition 9 / 10  =========
+[11:55:48] n = 50 ...
+    GAUSS single  = 0.050
+    GEXP   MMMD   = 0.240
+    NEW    MMMD   = 0.120
+[11:55:51] n = 100 ...
+    GAUSS single  = 0.120
+    GEXP   MMMD   = 0.270
+    NEW    MMMD   = 0.160
+[11:55:58] n = 200 ...
+    GAUSS single  = 0.280
+    GEXP   MMMD   = 0.340
+    NEW    MMMD   = 0.400
+[11:56:13] n = 300 ...
+    GAUSS single  = 0.410
+    GEXP   MMMD   = 0.480
+    NEW    MMMD   = 0.470
+[11:56:41] n = 400 ...
+    GAUSS single  = 0.490
+    GEXP   MMMD   = 0.690
+    NEW    MMMD   = 0.620
+[11:57:02] n = 500 ...
+    GAUSS single  = 0.630
+    GEXP   MMMD   = 0.740
+    NEW    MMMD   = 0.720
+
+=========  repetition 10 / 10  =========
+[11:58:11] n = 50 ...
+    GAUSS single  = 0.090
+    GEXP   MMMD   = 0.150
+    NEW    MMMD   = 0.150
+[11:58:14] n = 100 ...
+    GAUSS single  = 0.180
+    GEXP   MMMD   = 0.250
+    NEW    MMMD   = 0.220
+[11:58:20] n = 200 ...
+    GAUSS single  = 0.270
+    GEXP   MMMD   = 0.320
+    NEW    MMMD   = 0.310
+[11:58:36] n = 300 ...
+    GAUSS single  = 0.380
+    GEXP   MMMD   = 0.530
+    NEW    MMMD   = 0.410
+[11:59:05] n = 400 ...
+    GAUSS single  = 0.550
+    GEXP   MMMD   = 0.650
+    NEW    MMMD   = 0.680
+[11:59:47] n = 500 ...
+    GAUSS single  = 0.610
+    GEXP   MMMD   = 0.690
+    NEW    MMMD   = 0.710
+There were 50 or more warnings (use warnings() to see the first 50)
+
+Total wall time: 17.5 minutes

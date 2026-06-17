@@ -1,0 +1,22 @@
+{
+  "scenario": "mix635_vs_mix835",
+  "sample_sizes": [
+    30,
+    60,
+    90,
+    120,
+    150
+  ],
+  "outer_repetitions": 10,
+  "inner_repetitions": 500,
+  "B_boot": 500,
+  "alpha": 0.05,
+  "seed": 20260526,
+  "methods": [
+    "raw_pixel_gaussian5",
+    "cnn_final_fc128_gaussian5",
+    "cnn_multilayer_single_gaussian",
+    "cnn_multilayer_gaussian15"
+  ],
+  "checkpoint_path": "/home/dechao/kernel_two-sample/dechao_reproduction/medmnist_pathmnist28/shared_model/models/pathmnist_cnn_checkpoint.pt"
+}

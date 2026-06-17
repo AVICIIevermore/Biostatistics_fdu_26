@@ -1,0 +1,24 @@
+PathMNIST center-shift dataset split sanity check
+data_path: /home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/data/pathmnist.npz
+split_indices_path: /home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/configs/center_shift_split_seed2026_holdout20.npz
+seed: 2026
+holdout_fraction: 0.2
+
+Target counts:
+- label 6 (normal colon mucosa): source_holdout=1577, external=741
+- label 8 (colorectal adenocarcinoma epithelium): source_holdout=2577, external=1233
+
+All planned label/setting/n cells feasible: True
+
+- label=6 setting=H1_source_vs_external n=20: feasible=True, margin=721
+- label=6 setting=H1_source_vs_external n=100: feasible=True, margin=641
+- label=6 setting=H0_source n=20: feasible=True, margin=1537
+- label=6 setting=H0_source n=100: feasible=True, margin=1377
+- label=6 setting=H0_external n=20: feasible=True, margin=701
+- label=6 setting=H0_external n=100: feasible=True, margin=541
+- label=8 setting=H1_source_vs_external n=20: feasible=True, margin=1213
+- label=8 setting=H1_source_vs_external n=100: feasible=True, margin=1133
+- label=8 setting=H0_source n=20: feasible=True, margin=2537
+- label=8 setting=H0_source n=100: feasible=True, margin=2377
+- label=8 setting=H0_external n=20: feasible=True, margin=1193
+- label=8 setting=H0_external n=100: feasible=True, margin=1033

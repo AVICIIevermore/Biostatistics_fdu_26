@@ -1,0 +1,13 @@
+"scenario","method","method_label","noise_sigma","type1_mean","type1_se","n_rep"
+"set123_vs_set123","multilayer_single_gaussian","Multilayer Single Gaussian",0,0.0492,0.0032,10
+"set123_vs_set123","multilayer_single_gaussian","Multilayer Single Gaussian",0.2,0.0552,0.00206988995950134,10
+"set123_vs_set123","multilayer_single_gaussian","Multilayer Single Gaussian",0.4,0.0492,0.00186666666666667,10
+"set123_vs_set123","multilayer_single_gaussian","Multilayer Single Gaussian",0.6,0.051,0.00376238694920599,10
+"set123_vs_set123","multilayer_single_gaussian","Multilayer Single Gaussian",0.8,0.0514,0.00432100811282635,10
+"set123_vs_set123","multilayer_single_gaussian","Multilayer Single Gaussian",1,0.0492,0.00179381653960983,10
+"set128_vs_set128","multilayer_single_gaussian","Multilayer Single Gaussian",0,0.0516,0.0033967304540952,10
+"set128_vs_set128","multilayer_single_gaussian","Multilayer Single Gaussian",0.2,0.0546,0.00232952069462082,10
+"set128_vs_set128","multilayer_single_gaussian","Multilayer Single Gaussian",0.4,0.05,0.00299629400723256,10
+"set128_vs_set128","multilayer_single_gaussian","Multilayer Single Gaussian",0.6,0.0498,0.00304703863520705,10
+"set128_vs_set128","multilayer_single_gaussian","Multilayer Single Gaussian",0.8,0.0504,0.00403099105542159,10
+"set128_vs_set128","multilayer_single_gaussian","Multilayer Single Gaussian",1,0.0494,0.00436195674745482,10

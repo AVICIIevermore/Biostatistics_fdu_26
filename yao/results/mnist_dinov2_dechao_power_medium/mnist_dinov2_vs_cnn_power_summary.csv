@@ -1,0 +1,49 @@
+method,method_label,noise_sigma,power_mean,power_se,n_rep
+raw_pixel_gaussian5,Raw Pixel Gaussian-5 (784-d),0.0,0.9236,0.0038389813463701,10
+raw_pixel_gaussian5,Raw Pixel Gaussian-5 (784-d),0.2,0.8886,0.0056019837756122,10
+raw_pixel_gaussian5,Raw Pixel Gaussian-5 (784-d),0.4,0.8224,0.0043898873688411,10
+raw_pixel_gaussian5,Raw Pixel Gaussian-5 (784-d),0.6,0.6602,0.0072813307696998,10
+raw_pixel_gaussian5,Raw Pixel Gaussian-5 (784-d),0.8,0.3862,0.0088616527176869,10
+raw_pixel_gaussian5,Raw Pixel Gaussian-5 (784-d),1.0,0.1866,0.0091605434094029,10
+layer1_gaussian5,Layer1 GAP Gaussian-5 (32-d),0.0,0.1366,0.0053835139288593,10
+layer1_gaussian5,Layer1 GAP Gaussian-5 (32-d),0.2,0.1156,0.004987094455804,10
+layer1_gaussian5,Layer1 GAP Gaussian-5 (32-d),0.4,0.075,0.003309917756615,10
+layer1_gaussian5,Layer1 GAP Gaussian-5 (32-d),0.6,0.0652,0.0039799497484264,10
+layer1_gaussian5,Layer1 GAP Gaussian-5 (32-d),0.8,0.069,0.0039805080636075,10
+layer1_gaussian5,Layer1 GAP Gaussian-5 (32-d),1.0,0.0624,0.0056,10
+layer1_pool2x2_gaussian5,Layer1 2x2 Gaussian-5 (128-d),0.0,0.2206,0.0065594715234282,10
+layer1_pool2x2_gaussian5,Layer1 2x2 Gaussian-5 (128-d),0.2,0.1832,0.004493946545694,10
+layer1_pool2x2_gaussian5,Layer1 2x2 Gaussian-5 (128-d),0.4,0.1538,0.0068860567655064,10
+layer1_pool2x2_gaussian5,Layer1 2x2 Gaussian-5 (128-d),0.6,0.115,0.0065200545328326,10
+layer1_pool2x2_gaussian5,Layer1 2x2 Gaussian-5 (128-d),0.8,0.0966,0.0048170991732,10
+layer1_pool2x2_gaussian5,Layer1 2x2 Gaussian-5 (128-d),1.0,0.0788,0.0037380922050336,10
+layer2_gaussian5,Layer2 GAP Gaussian-5 (64-d),0.0,0.9308,0.0043328204824725,10
+layer2_gaussian5,Layer2 GAP Gaussian-5 (64-d),0.2,0.7684,0.0069205009452592,10
+layer2_gaussian5,Layer2 GAP Gaussian-5 (64-d),0.4,0.3414,0.0068381283989115,10
+layer2_gaussian5,Layer2 GAP Gaussian-5 (64-d),0.6,0.1166,0.0070745239337279,10
+layer2_gaussian5,Layer2 GAP Gaussian-5 (64-d),0.8,0.0796,0.0047027178902795,10
+layer2_gaussian5,Layer2 GAP Gaussian-5 (64-d),1.0,0.0666,0.0034775470281986,10
+final_embedding_gaussian5,Final FC Gaussian-5 (128-d),0.0,1.0,0.0,10
+final_embedding_gaussian5,Final FC Gaussian-5 (128-d),0.2,0.9992,0.000442216638714,10
+final_embedding_gaussian5,Final FC Gaussian-5 (128-d),0.4,0.763,0.0103462285130595,10
+final_embedding_gaussian5,Final FC Gaussian-5 (128-d),0.6,0.1954,0.0103195607141648,10
+final_embedding_gaussian5,Final FC Gaussian-5 (128-d),0.8,0.103,0.0050354300268751,10
+final_embedding_gaussian5,Final FC Gaussian-5 (128-d),1.0,0.0734,0.0063669284413897,10
+multilayer_single_gaussian,Multilayer Single Gaussian (3 comps),0.0,1.0,0.0,10
+multilayer_single_gaussian,Multilayer Single Gaussian (3 comps),0.2,1.0,0.0,10
+multilayer_single_gaussian,Multilayer Single Gaussian (3 comps),0.4,0.9306,0.0057892620907638,10
+multilayer_single_gaussian,Multilayer Single Gaussian (3 comps),0.6,0.3492,0.0144812522478778,10
+multilayer_single_gaussian,Multilayer Single Gaussian (3 comps),0.8,0.1416,0.011074695882456,10
+multilayer_single_gaussian,Multilayer Single Gaussian (3 comps),1.0,0.088,0.0066799866932668,10
+multilayer_gaussian15,Multilayer Gaussian-15 (15 comps),0.0,1.0,0.0,10
+multilayer_gaussian15,Multilayer Gaussian-15 (15 comps),0.2,1.0,0.0,10
+multilayer_gaussian15,Multilayer Gaussian-15 (15 comps),0.4,0.8758,0.0066563253125629,10
+multilayer_gaussian15,Multilayer Gaussian-15 (15 comps),0.6,0.2852,0.015316512512826,10
+multilayer_gaussian15,Multilayer Gaussian-15 (15 comps),0.8,0.1416,0.0060207050159336,10
+multilayer_gaussian15,Multilayer Gaussian-15 (15 comps),1.0,0.096,0.0058878405775519,10
+dinov2_base_gaussian5,DINOv2 Base Gaussian-5 (768-d),0.0,0.995,0.005,2
+dinov2_base_gaussian5,DINOv2 Base Gaussian-5 (768-d),0.2,0.83,0.0,2
+dinov2_base_gaussian5,DINOv2 Base Gaussian-5 (768-d),0.4,0.225,0.045,2
+dinov2_base_gaussian5,DINOv2 Base Gaussian-5 (768-d),0.6,0.055,0.025,2
+dinov2_base_gaussian5,DINOv2 Base Gaussian-5 (768-d),0.8,0.06,0.02,2
+dinov2_base_gaussian5,DINOv2 Base Gaussian-5 (768-d),1.0,0.065,0.015,2

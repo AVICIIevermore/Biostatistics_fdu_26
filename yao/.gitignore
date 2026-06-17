@@ -1,0 +1,10 @@
+__pycache__/
+**/__pycache__/
+*.pyc
+data/medmnist/
+data/bbbc021_images/
+data/*.csv
+data/embeddings/*
+!data/embeddings/.gitkeep
+results/*
+!results/.gitkeep
