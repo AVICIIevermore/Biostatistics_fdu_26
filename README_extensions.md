@@ -418,3 +418,107 @@ graph_mmmd_test(xy$X, xy$Y, B = 500)
 task4_graph_curve.png 现在只用于比较不同 null 分布下的 Type-I error。
 task4_skew_type1_curve.png 进一步把横轴改成标准化偏斜度，用来观察分布偏态增强时检验是否仍保持 0.05 水平附近的校准性。
 ```
+
+## 8. 演讲稿（个人部分，控制在 3 分钟以内）
+
+> 以下为 Andrew Zheng在 `representation_final.tex` 中 Part 0（MMMD Kernel Extensions）的讲稿，
+> 对应幻灯片第 3–11 页。按正常语速约 **2 分 50 秒**，建议配合激光笔指示图上关键区域。
+
+---
+
+**Slide 1 — MMMD Framework（约 30 秒）**
+
+> 我负责的部分是 MMMD 的多核框架扩展和数值实验。
+> 首先简单回顾一下 MMMD 的流程：
+> 给定两组样本 X 和 Y，我们构造一组多尺度核函数，计算每个核下的 MMD 统计量，
+> 得到一个 r 维向量。然后通过 Mahalanobis 距离对核间相关性做去相关，
+> 最后用 multiplier bootstrap 做假设检验。
+> 我们的框架支持三种核族——GEXP、LAP 和混合核，
+> 并且扩展了 Graph-MMMD、偏态分布和并行计算后端。
+
+**Slide 2 — Task 1: ε-Contamination Sensitivity（约 20 秒）**
+
+> 第一个实验是污染敏感性。
+> 我们在 Q 分布中混入 t₁₀ 的污染分量，扫描污染比例 ε。
+> 左图横轴是 ε，纵轴是 power。
+> 可以看到在 ε 约 0.625 时 power 达到 0.80，
+> 并且 power 在 ε ∈ [0.45, 0.65] 区间内从 0.57 快速上升到 0.80，过渡非常陡峭。
+
+**Slide 3 — Task 2: Variance-Scale k Sensitivity（约 20 秒）**
+
+> 第二个实验测试对方差尺度变化的检测能力。
+> Q 分布的协方差乘以 k，H₀ 对应 k=1。
+> 表格对比了三种 MMMD 和单核 Gauss MMD 的最小可检测 k 值。
+> 可以看到 Mixed MMMD 在 k=1.25 就达到了 0.80 power，
+> 而单核 Gauss MMD 需要 k=1.40——MMMD 提前了约 15%。
+> 在 k=1.20 时，MMMD 的 power 是单核方法的 4 倍。
+
+**Slide 4 — Task 3a: Type-I Error Calibration（约 15 秒）**
+
+> 第三个实验先看 Type-I error 的校准。
+> 在 H₀ 下检验三种核族、三种 r 值。
+> r=3 和 r=5 时所有方法都在 0.02 到 0.055 之间，校准良好。
+> 但 r=10 的 GEXP 膨胀到 0.12——说明核太多会恶化协方差估计。
+> LAP 核族在所有 r 下都保持稳定。
+
+**Slide 5 — Task 3b: ROC Analysis（约 15 秒）**
+
+> ROC 分析部分，我们用了向量化扫描：
+> 一次 bootstrap 就可以算出所有 α 阈值下的决策，
+> 不需要为每个 α 重新算核矩阵。
+> 右图 ROC 曲线——三条曲线都在对角线上方，
+> 且 FPR 都接近名义水平 0.05，说明检验是有效的。
+
+**Slide 6 — Task 4a: Graph-MMMD Extension（约 20 秒）**
+
+> 第四个实验是 Graph-MMMD 扩展。
+> 我们把两组样本合并，构建 kNN 图，取图 Laplacian，
+> 然后用 heat kernel 生成一系列图核，再接入 MMMD 流程。
+> 左图的四根柱子是在四种不同零分布下的 Type-I error——
+> 包括正态、方差放大、偏正态和多元 Laplace。
+> 所有值都 ≤ 0.053，说明图核方法在不同分布下都保持良好的校准。
+
+**Slide 7 — Task 4b: Skewness Robustness（约 15 秒）**
+
+> 进一步地，我们扫描了偏正态分布从 0 到 0.90 的标准化偏斜度。
+> 可以看到即使在极端偏斜度 0.90 下，
+> Type-I error 仍然只有 0.020，始终控制在 0.053 以下。
+> 这说明 Graph-MMMD 对分布的非对称性非常稳健。
+
+**Slide 8 — Fig. 2 Reproduction: Mixture Distribution Power（约 20 秒）**
+
+> 最后我们复现了论文 Fig.2 的混合分布实验。
+> P 和 Q 都是正态-t 混合分布，区别在于 Q 的协方差放大了 1.25 倍。
+> 表格对比了不同混合比例 p 下的 power。
+> 在 p=0——也就是纯正态时——Mixed MMMD 达到 0.96，
+> 而单核 Gauss MMD 只有 0.46，MMMD 的优势是 2 到 5 倍。
+
+**Slide 9 — Summary（约 15 秒）**
+
+> 总结一下：
+> MMMD 在污染检测上比单核方法早约 15%，
+> 校准良好（只要核数不过多），
+> Graph-MMMD 在不同分布和偏斜度下都保持稳健，
+> 在混合分布场景下 power 是单核方法的 2–5 倍。
+> 整个实验框架是模块化的 R 库，支持并行计算，可以方便地接入新数据和新的核函数。
+> 谢谢！
+
+---
+
+**时间分配总览：**
+
+| 幻灯片 | 内容 | 建议时长 |
+|---|---|---|
+| 1 | MMMD Framework | ~30s |
+| 2 | Task 1: ε-Contamination | ~20s |
+| 3 | Task 2: Variance k | ~20s |
+| 4 | Task 3a: Type-I Error | ~15s |
+| 5 | Task 3b: ROC Analysis | ~15s |
+| 6 | Task 4a: Graph-MMMD | ~20s |
+| 7 | Task 4b: Skewness Robustness | ~15s |
+| 8 | Fig.2: Mixture Power | ~20s |
+| 9 | Summary | ~15s |
+| **合计** | | **~2′50″** |
+
+> 提示：如果时间紧张，Task 3b（ROC）可以一句话带过（"ROC 曲线验证了检验的有效性"），
+> 把时间压缩到约 2′35″；如果时间充裕，可以在 Framework 和 Summary 页各多停留 5 秒。
