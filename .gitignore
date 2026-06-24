@@ -4,6 +4,7 @@
 /representation_final_package
 /results
 /report
+.DS_Store
 
 # ===== From yao/dinov2-mmmd-bloodmnist branch =====
 handoff/
