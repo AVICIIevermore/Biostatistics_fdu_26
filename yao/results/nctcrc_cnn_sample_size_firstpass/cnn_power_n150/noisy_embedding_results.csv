@@ -1,0 +1,5 @@
+"outer_iter","noise_sigma","method","reject_rate","scenario"
+1,0,"GAUSS5",0.95,"power"
+2,0,"GAUSS5",0.75,"power"
+3,0,"GAUSS5",0.85,"power"
+4,0,"GAUSS5",0.95,"power"

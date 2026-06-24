@@ -1,0 +1,10 @@
+method_label,sample_size,scenario,noise_sigma,metric_mean,metric_se,n_rep
+CLIP + GAUSS5,30,power,0.0,0.0,,1
+DINOv2 + GAUSS5,30,power,0.0,0.0,,1
+Raw Pixel + GAUSS5,30,power,0.0,0.0,,1
+CLIP + GAUSS5,30,type1_a,0.0,0.0,,1
+DINOv2 + GAUSS5,30,type1_a,0.0,0.0,,1
+Raw Pixel + GAUSS5,30,type1_a,0.0,0.0,,1
+CLIP + GAUSS5,30,type1_b,0.0,0.0,,1
+DINOv2 + GAUSS5,30,type1_b,0.0,0.0,,1
+Raw Pixel + GAUSS5,30,type1_b,0.0,0.0,,1
