@@ -1,0 +1,137 @@
+[
+  {
+    "tag": "class_mixture_test",
+    "checkpoint_path": "/home/dechao/kernel_two-sample/dechao_reproduction/medmnist_pathmnist28/shared_model/models/pathmnist_cnn_checkpoint.pt",
+    "preprocess": "none",
+    "classifier_weight_shape": [
+      9,
+      128
+    ],
+    "svd_tol": 2.5918213891114734e-13,
+    "singular_values": [
+      9.11916081422915,
+      8.172559644106613,
+      6.5284820185456205,
+      5.548428252495547,
+      5.250230283706831,
+      4.555877603225623,
+      3.6251481952063727,
+      2.9706910893330556,
+      2.667022887041696
+    ],
+    "row_space_rank": 9,
+    "mean_norm_final_full": 20.43251082605044,
+    "mean_norm_final_semantic": 7.457339973673926,
+    "mean_norm_final_residual": 18.946933699477462,
+    "mean_semantic_norm_fraction": 0.34949237939718875,
+    "mean_residual_norm_fraction": 0.9336097116464452
+  },
+  {
+    "tag": "center_source_holdout",
+    "checkpoint_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/shared_model/models/pathmnist_cnn_checkpoint.pt",
+    "preprocess": "none",
+    "classifier_weight_shape": [
+      9,
+      128
+    ],
+    "svd_tol": 2.41844496548998e-13,
+    "singular_values": [
+      8.509146754216193,
+      7.584322130887338,
+      6.425532698348859,
+      5.745077926312939,
+      5.070723376281498,
+      4.441243553122476,
+      3.555915464192646,
+      2.921515909023322,
+      2.1222997099027694
+    ],
+    "row_space_rank": 9,
+    "mean_norm_final_full": 20.280895774010684,
+    "mean_norm_final_semantic": 6.756203065444996,
+    "mean_norm_final_residual": 19.048831428708528,
+    "mean_semantic_norm_fraction": 0.32044540416279954,
+    "mean_residual_norm_fraction": 0.9441586658153343
+  },
+  {
+    "tag": "center_external",
+    "checkpoint_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/shared_model/models/pathmnist_cnn_checkpoint.pt",
+    "preprocess": "none",
+    "classifier_weight_shape": [
+      9,
+      128
+    ],
+    "svd_tol": 2.41844496548998e-13,
+    "singular_values": [
+      8.509146754216193,
+      7.584322130887338,
+      6.425532698348859,
+      5.745077926312939,
+      5.070723376281498,
+      4.441243553122476,
+      3.555915464192646,
+      2.921515909023322,
+      2.1222997099027694
+    ],
+    "row_space_rank": 9,
+    "mean_norm_final_full": 21.78033702079967,
+    "mean_norm_final_semantic": 7.30490582095188,
+    "mean_norm_final_residual": 20.387671703103713,
+    "mean_semantic_norm_fraction": 0.30785618312430874,
+    "mean_residual_norm_fraction": 0.9469527527545935
+  },
+  {
+    "tag": "center_source_holdout",
+    "checkpoint_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/shared_model/models/pathmnist_cnn_checkpoint.pt",
+    "preprocess": "channel_standardized",
+    "classifier_weight_shape": [
+      9,
+      128
+    ],
+    "svd_tol": 2.41844496548998e-13,
+    "singular_values": [
+      8.509146754216193,
+      7.584322130887338,
+      6.425532698348859,
+      5.745077926312939,
+      5.070723376281498,
+      4.441243553122476,
+      3.555915464192646,
+      2.921515909023322,
+      2.1222997099027694
+    ],
+    "row_space_rank": 9,
+    "mean_norm_final_full": 127.80109621727726,
+    "mean_norm_final_semantic": 33.33104616756659,
+    "mean_norm_final_residual": 123.2985108290757,
+    "mean_semantic_norm_fraction": 0.2617131414579007,
+    "mean_residual_norm_fraction": 0.9645113264619798
+  },
+  {
+    "tag": "center_external",
+    "checkpoint_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/shared_model/models/pathmnist_cnn_checkpoint.pt",
+    "preprocess": "channel_standardized",
+    "classifier_weight_shape": [
+      9,
+      128
+    ],
+    "svd_tol": 2.41844496548998e-13,
+    "singular_values": [
+      8.509146754216193,
+      7.584322130887338,
+      6.425532698348859,
+      5.745077926312939,
+      5.070723376281498,
+      4.441243553122476,
+      3.555915464192646,
+      2.921515909023322,
+      2.1222997099027694
+    ],
+    "row_space_rank": 9,
+    "mean_norm_final_full": 122.38297286422687,
+    "mean_norm_final_semantic": 31.881958396172728,
+    "mean_norm_final_residual": 118.09332360136125,
+    "mean_semantic_norm_fraction": 0.26237509207505205,
+    "mean_residual_norm_fraction": 0.9644129109103226
+  }
+]

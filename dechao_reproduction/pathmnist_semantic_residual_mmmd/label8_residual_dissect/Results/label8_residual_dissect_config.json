@@ -1,0 +1,16 @@
+{
+  "outer_repetitions": 10,
+  "inner_repetitions": 20,
+  "B_boot": 500,
+  "alpha": 0.05,
+  "n_grid": [
+    20,
+    30,
+    50
+  ],
+  "domain_repeats": 20,
+  "train_fraction": 0.7,
+  "logistic_l2": 0.001,
+  "center_checkpoint": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/shared_model/models/pathmnist_cnn_checkpoint.pt",
+  "center_split_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/configs/center_shift_split_seed2026_holdout20.npz"
+}

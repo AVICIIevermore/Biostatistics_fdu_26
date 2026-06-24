@@ -1,0 +1,17 @@
+{
+  "outer_repetitions": 10,
+  "inner_repetitions": 20,
+  "B_boot": 500,
+  "alpha": 0.05,
+  "n_grid": [
+    20,
+    30,
+    50
+  ],
+  "domain_repeats": 20,
+  "train_fraction": 0.7,
+  "logistic_l2": 0.001,
+  "propensity_caliper": 0.1,
+  "color_matched": true,
+  "feature_cache": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_semantic_residual_mmmd/label8_residual_dissect/Features/centered_center_pools_features.npz"
+}

@@ -1,0 +1,5 @@
+train_label,train_label_name,test_label,test_label_name,representation,axis_method,repeats,mean_auc,sd_auc,mean_accuracy,sd_accuracy,mean_effect_size,sd_effect_size,mean_train_source_n,mean_train_external_n,mean_test_source_n,mean_test_external_n
+6,normal colon mucosa,6,normal colon mucosa,color15,logistic_regression,20,0.8211924762600438,0.01724086241588069,0.7412162162162161,0.01736764824661462,1.265561954804229,0.08742631026360706,519.0,519.0,222.0,222.0
+6,normal colon mucosa,6,normal colon mucosa,color15,mean_difference,20,0.7454589724859995,0.024700374628608152,0.6665540540540541,0.022634560122346787,0.9422933524318744,0.11133343135610702,519.0,519.0,222.0,222.0
+8,colorectal adenocarcinoma epithelium,8,colorectal adenocarcinoma epithelium,color15,logistic_regression,20,0.7732863403944485,0.011200477169572797,0.6923648648648649,0.014370246312634012,1.0152714761476136,0.05090220940681379,863.0,863.0,370.0,370.0
+8,colorectal adenocarcinoma epithelium,8,colorectal adenocarcinoma epithelium,color15,mean_difference,20,0.7338188458729,0.01747887850104809,0.6717567567567568,0.015307015294792644,0.8673904626525184,0.07612820004779043,863.0,863.0,370.0,370.0

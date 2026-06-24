@@ -1,0 +1,38 @@
+{
+  "outer_repetitions": 10,
+  "inner_repetitions": 20,
+  "B_boot": 500,
+  "B_perm": 500,
+  "alpha": 0.05,
+  "class_h1_sample_sizes": [
+    60,
+    90,
+    120
+  ],
+  "class_h0_sample_sizes": [
+    60,
+    120
+  ],
+  "center_h1_n": [
+    20,
+    30,
+    50
+  ],
+  "center_h0_n": [
+    20,
+    50
+  ],
+  "permutation_n": [
+    20,
+    30,
+    50
+  ],
+  "center_labels": [
+    6,
+    8
+  ],
+  "random_projection_repeats": 20,
+  "class_checkpoint": "/home/dechao/kernel_two-sample/dechao_reproduction/medmnist_pathmnist28/shared_model/models/pathmnist_cnn_checkpoint.pt",
+  "center_checkpoint": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/shared_model/models/pathmnist_cnn_checkpoint.pt",
+  "center_split_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/configs/center_shift_split_seed2026_holdout20.npz"
+}
