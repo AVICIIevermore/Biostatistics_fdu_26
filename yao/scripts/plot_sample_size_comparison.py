@@ -37,7 +37,7 @@ def plot_panel(ax, df: pd.DataFrame, scenario: str, ylabel: str, title: str) -> 
     ax.set_xlabel("Sample size per sample", fontsize=11)
     ax.set_ylabel(ylabel, fontsize=11)
     ax.set_xticks(sorted(df["sample_size"].unique()))
-    ax.set_ylim(-0.02, 1.02)
+    ax.set_ylim(0.0, 0.2 if scenario.startswith("type1") else 1.02)
     ax.grid(True, linestyle=":", alpha=0.5)
 
 

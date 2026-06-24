@@ -1,0 +1,2 @@
+noise_sigma,method,scenario,type1_mean,type1_se,n_rep
+0.0,GAUSS5,type1,0.07500000000000001,0.025,4

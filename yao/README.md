@@ -13,6 +13,9 @@ The statistical testing code is copied/adapted into `src/mmmd_functions.R`, so t
 - `scripts/extract_medmnist_embeddings.py`: downloads a MedMNIST 2D dataset and writes CLIP/DINOv2 embeddings to CSV.
 - `scripts/extract_mnist_embeddings.py`: extracts CLIP/DINOv2 embeddings from local MNIST idx gzip files for smoke tests.
 - `scripts/extract_manifest_embeddings.py`: extracts embeddings from a generic image manifest, useful for BBBC021 after metadata preparation.
+- `scripts/build_imagefolder_metadata.py`: scans a class-per-folder dataset and writes a stratified metadata CSV.
+- `scripts/extract_imagefolder_noise_embeddings.py`: builds shared CLIP/DINOv2 embedding pools from a local image-folder dataset.
+- `scripts/run_rawpixel_gauss5_imagefolder.py`: raw-pixel GAUSS5 baseline for a local image-folder dataset.
 - `src/mmmd_functions.R`: single-kernel MMD and multi-kernel Mahalanobis MMD with Gaussian multiplier bootstrap.
 - `scripts/run_embedding_testing.R`: estimates Type-I error and power from an embedding CSV.
 - `scripts/run_noisy_embedding_testing.R`: estimates power or Type-I error from noisy MNIST embeddings stored as CSV or as an `embeddings.npy` plus `metadata.csv` directory.

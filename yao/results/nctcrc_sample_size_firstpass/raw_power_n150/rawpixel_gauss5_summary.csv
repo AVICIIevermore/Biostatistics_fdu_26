@@ -1,0 +1,2 @@
+noise_sigma,method,scenario,power_mean,power_se,n_rep
+0.0,GAUSS5,power,0.3,0.067700320038633,4

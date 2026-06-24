@@ -1,0 +1,94 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\linespread{1.1}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\section{Background and Motivation}
+
+The two-sample problem asks whether two independent samples are drawn from the same distribution. Let \(P\) and \(Q\) be two probability distributions on a sample space \(\mathcal{X}\), and suppose we observe independent samples
+\[
+\mathcal{X}_m=\{X_1,\ldots,X_m\}\sim P,\qquad
+\mathcal{Y}_n=\{Y_1,\ldots,Y_n\}\sim Q.
+\]
+The goal is to test
+\[
+H_0:P=Q
+\qquad\text{versus}\qquad
+H_1:P\ne Q.
+\]
+
+This problem is important in biostatistics because differences between two populations are often not limited to a mean shift. In gene-expression, microbiome, single-cell, and biomedical image studies, two groups may differ in covariance structure, sparsity, multimodality, tail behavior, or relative abundance of subpopulations. For example, MMD has been used for differentially expressed pathway analysis, where a biological pathway is naturally represented by a multivariate expression profile \cite{gretton2012mmd,shang2016pathway}. In microbiome studies, differential abundance may involve a set of taxa rather than one feature at a time, motivating adaptive multivariate two-sample methods such as AMDA \cite{banerjee2019amda}. Therefore, a useful two-sample test should be nonparametric, sensitive to broad alternatives, valid under the null, and applicable to high-dimensional or structured data.
+
+\section{Existing Works}
+
+Classical tests such as Wilcoxon/Mann--Whitney, Wald--Wolfowitz, and Kolmogorov--Smirnov are interpretable but mainly suited to one-dimensional or ordered observations. Graph-based and distance-based tests extend the idea to multivariate data, for example through minimum-spanning-tree tests or energy-distance statistics, but their power depends strongly on the chosen distance geometry, which can be unreliable in high dimensions \cite{friedman1979mst,sejdinovic2013equivalence}.
+
+Kernel two-sample tests based on maximum mean discrepancy (MMD) provide a more flexible framework. MMD compares the mean embeddings of \(P\) and \(Q\) in a reproducing kernel Hilbert space and, with characteristic kernels, equals zero if and only if \(P=Q\) \cite{gretton2012mmd}. However, finite-sample power depends heavily on the kernel and bandwidth. The common median heuristic is convenient but not uniformly optimal, and kernel or distance tests may lose power in high-dimensional regimes \cite{ramdas2015decreasing}.
+
+Existing improvements either learn/select a better kernel or aggregate multiple kernels. Kernel learning can improve power but complicates Type-I error control if the same data are used for selection and testing; data splitting avoids this but reduces sample size \cite{liu2020deepkernel}. Aggregated tests such as MMDAgg reduce dependence on one bandwidth, but still require careful calibration and may not fully use correlations among MMD estimates from different kernels \cite{schrab2023mmdagg}. Chatterjee and Bhattacharya's Mahalanobis MMD method addresses this limitation by combining multiple MMD estimates through their covariance structure, aiming to improve power without relying on a single kernel bandwidth \cite{chatterjee2025boosting}.
+
+\begin{thebibliography}{99}
+
+\bibitem{banerjee2019amda}
+Banerjee, K. et al. (2019).
+An Adaptive Multivariate Two-Sample Test With Application to Microbiome Differential Abundance Analysis.
+\textit{Frontiers in Genetics}.
+\url{https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2019.00350/full}
+
+\bibitem{chatterjee2025boosting}
+Chatterjee, A. and Bhattacharya, B. B. (2025).
+Boosting the power of kernel two-sample tests.
+\textit{Biometrika}; arXiv version.
+\url{https://arxiv.org/abs/2302.10687}
+
+\bibitem{friedman1979mst}
+Friedman, J. H. and Rafsky, L. C. (1979).
+Multivariate generalizations of the Wald--Wolfowitz and Smirnov two-sample tests.
+\textit{The Annals of Statistics}.
+\url{https://www.osti.gov/biblio/6801731}
+
+\bibitem{gretton2012mmd}
+Gretton, A. et al. (2012).
+A kernel two-sample test.
+\textit{Journal of Machine Learning Research}.
+\url{https://www.jmlr.org/beta/papers/v13/gretton12a.html}
+
+\bibitem{liu2020deepkernel}
+Liu, F. et al. (2020).
+Learning deep kernels for non-parametric two-sample tests.
+\textit{Proceedings of ICML}.
+\url{https://dblp.org/rec/conf/icml/LiuXL0GS20.html}
+
+\bibitem{ramdas2015decreasing}
+Ramdas, A. et al. (2015).
+On the decreasing power of kernel and distance based nonparametric hypothesis tests in high dimensions.
+\textit{Proceedings of AAAI}.
+\url{https://ojs.aaai.org/index.php/AAAI/article/view/9692}
+
+\bibitem{schrab2023mmdagg}
+Schrab, A. et al. (2023).
+MMD aggregated two-sample test.
+\textit{Journal of Machine Learning Research}.
+\url{https://www.jmlr.org/papers/v24/21-1289.html}
+
+\bibitem{sejdinovic2013equivalence}
+Sejdinovic, D. et al. (2013).
+Equivalence of distance-based and RKHS-based statistics in hypothesis testing.
+\textit{The Annals of Statistics}.
+\url{https://pure.psu.edu/en/publications/equivalence-of-distance-based-and-rkhs-based-statistics-in-hypoth/}
+
+\bibitem{shang2016pathway}
+Shang, X. et al. (2016).
+Inferring differentially expressed pathways using kernel maximum mean discrepancy-based test.
+\url{https://diposit.ub.edu/dspace/handle/2445/100585}
+
+\end{thebibliography}
+
+\end{document}
