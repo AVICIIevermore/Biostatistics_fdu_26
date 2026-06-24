@@ -1,4 +1,0 @@
-[2026-05-26 09:16:55] smoke config: {"B_boot": 100, "alpha": 0.05, "checkpoint_path": "/home/dechao/kernel_two-sample/dechao_reproduction/medmnist_pathmnist28/shared_model/models/pathmnist_cnn_checkpoint.pt", "methods": ["raw_pixel_gaussian5", "cnn_final_fc128_gaussian5"], "outer_repetitions": 2, "sample_size": 30, "scenario": "mix635_vs_mix835", "seed": 20260526}
-[2026-05-26 09:16:57] outer_iter 1/2 finished in 0.49s
-[2026-05-26 09:16:57] outer_iter 2/2 finished in 0.03s
-[2026-05-26 09:16:58] smoke outputs written

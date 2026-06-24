@@ -27,7 +27,7 @@ Kernel two-sample testing is fundamental in statistics for detecting differences
 
 ## Project Structure
 
-This project is organized into three main experiment families:
+This project is organized into four main experiment families:
 
 ```
 MMMD-boost-kernel-two-sample/
@@ -43,6 +43,7 @@ MMMD-boost-kernel-two-sample/
 ├── Time and Power Comparison/         # Original paper: MMMD vs MMD trade-offs
 ├── dechao_reproduction/               # Dechao reproductions (MNIST, PathMNIST, embeddings)
 ├── lrj_covariance_matrix/             # New covariance matrix methods
+├── zzh/                                # Numerical extension and graph-MMMD workspace
 ├── code/                              # Shared Python environment
 └── README.md                          # This file
 ```
@@ -379,10 +380,15 @@ When $q \approx r$ (paper's $r$ kernel MMMD), main term remains $O(r^2N^2)$; whe
 
 ## Extended Experiments: Running Simulations
 
+The `zzh/` folder collects the numerical extension and graph-MMMD files added
+after commit `c481f1ffafc552c1512f7544284c6fb895248e72`. It mirrors the
+root-level additions into a dedicated workspace next to `yao/`, including
+`R/`, `experiments/`, small example data, run scripts, and an internal
+`zzh/README.md` index.
+
 ### Quick Start (Smoke Test)
 ```bash
-cd dechao_reproduction
-Rscript run_all_tasks.R
+Rscript zzh/run_all_tasks.R
 ```
 
 ### Standard Parameters (Recommended)
@@ -493,7 +499,7 @@ Default: $\lambda = 10^{-5} \cdot \min_i(\widehat\Sigma_{ii})$. For custom ridge
 | `dechao_reproduction/` | Dechao Huang (黄德超) |
 | `dechao_reproduction/yao/` | Yao Yu (于尧) |
 | `lrj_covariance_matrix/` | Ruijie Li (李睿杰) |
-| `experiments/` | Ziheng Zheng (郑子恒) |
+| `zzh/` and root-level extension scripts | Ziheng Zheng (郑子恒) |
 
 ---
 
