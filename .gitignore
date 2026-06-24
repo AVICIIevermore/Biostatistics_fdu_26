@@ -48,6 +48,9 @@ dechao_reproduction/**/*.npz
 # keep summaries, configs, plots, and audit CSVs instead.
 dechao_reproduction/medmnist_pathmnist28/**/Results/*_results.csv
 dechao_reproduction/pathmnist_center_shift_mmmd/**/Results/pathmnist_center_shift_results.csv
+dechao_reproduction/pathmnist_semantic_residual_mmmd/**/Results/*_results.csv
+dechao_reproduction/pathmnist_semantic_residual_mmmd/**/Features/*.npz
+dechao_reproduction/**/logs/*.log
 
 # Superseded smoke/inner=1 archives kept locally only.
 dechao_reproduction/medmnist_pathmnist28/**/archive_*/
@@ -55,3 +58,6 @@ dechao_reproduction/medmnist_pathmnist28/**/archive_*/
 # Interrupted partial experiment after MNIST folder consolidation.
 dechao_reproduction/mnist/faster_mnist_cnn_type1_two_nulls_gaussian_same_stats/
 dechao_reproduction/**/nohup.out
+
+# Large dataset file; download from MedMNIST official source.
+lrj-covariance_matrix/PathMNIST/pathmnist.npz

@@ -1,0 +1,53 @@
+{
+  "dataset": "PathMNIST-28",
+  "outer_repetitions": 10,
+  "inner_repetitions": 500,
+  "B_boot": 500,
+  "alpha": 0.05,
+  "class_mixture_h1": "mix635_vs_mix835",
+  "class_mixture_h1_sample_sizes": [
+    60,
+    90,
+    120
+  ],
+  "class_mixture_h0": "mix635_vs_mix635",
+  "class_mixture_h0_sample_sizes": [
+    60,
+    120
+  ],
+  "center_shift_labels": [
+    6,
+    8
+  ],
+  "center_shift_settings": [
+    "H1_source_vs_external",
+    "H0_source",
+    "H0_external"
+  ],
+  "center_shift_n_grid": [
+    20,
+    30,
+    50
+  ],
+  "representations": [
+    "final_full",
+    "logits",
+    "final_semantic",
+    "final_residual"
+  ],
+  "newly_computed_representations": [
+    "logits",
+    "final_semantic",
+    "final_residual"
+  ],
+  "final_full_reused_from": {
+    "class_power": "/home/dechao/kernel_two-sample/dechao_reproduction/medmnist_pathmnist28/experiments/03_sample_size_power_mix635_vs_mix835/Results/sample_size_power_summary.csv",
+    "class_type1": "/home/dechao/kernel_two-sample/dechao_reproduction/medmnist_pathmnist28/experiments/04_type1_mix635_vs_mix635_null/Results/type1_summary.csv",
+    "center_power": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/experiments/03_center_shift_power/Results/pathmnist_center_shift_summary.csv",
+    "center_type1": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/experiments/04_center_shift_type1_checks/Results/pathmnist_center_shift_summary.csv"
+  },
+  "class_checkpoint": "/home/dechao/kernel_two-sample/dechao_reproduction/medmnist_pathmnist28/shared_model/models/pathmnist_cnn_checkpoint.pt",
+  "center_checkpoint": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/shared_model/models/pathmnist_cnn_checkpoint.pt",
+  "center_split_path": "/home/dechao/kernel_two-sample/dechao_reproduction/pathmnist_center_shift_mmmd/configs/center_shift_split_seed2026_holdout20.npz",
+  "optional_channel_standardization": true
+}
